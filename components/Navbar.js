@@ -5,6 +5,9 @@ import { useState } from "react";
 import styles from "../styles/Layout.module.css";
 import styles2 from '../styles/Home.module.css'
 
+import Image from 'next/image'
+import logo from "../public/sticky-note1.svg"
+
 const Navbar = () => {
     const [isOpen,setIsOpen] = useState(false);
     const openMenu= ()=> setIsOpen(!isOpen);
@@ -19,11 +22,17 @@ const Navbar = () => {
             <Link href="/register">Register</Link>
         </nav>
          */
+
+        // Image by <a href="https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=147054">OpenClipart-Vectors</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=147054">Pixabay</a>
+
         <header className={styles2.header}>
             <nav className={styles.navbar}>
                 {/*<Link href='/'>*/}
                 {/*    <a className={styles.navlogo}>[BrandLogo]</a>*/}
                 {/*</Link>*/}
+
+                {/*<Image className={styles.logo} src={logo} alt={"?logo_image?"}/>*/}
+
                 <div className={styles.navmenu}>
                     <div className={styles.navitem}>
                         <Link href='/' className={isOpen === false ? styles.navlink : styles.navlink+' '+styles.active} onClick={openMenu}>

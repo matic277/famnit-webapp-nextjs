@@ -1,0 +1,44 @@
+.formSignin {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+/*Input boxes and labels*/
+.inputBox {
+    width: 20em;
+    height: 2em;
+
+    margin-top: 3px;
+    padding-left: 2px;
+
+    border: 0;
+    /*border: 0.5rem outset pink;*/
+    /*outline: 1px solid khaki;*/
+    border-radius: 5px;
+}
+.inputBox:hover {
+    box-shadow: 0 0 4px white;
+}
+.inputBox:focus {
+    box-shadow: 0 0 4px white;
+    outline: none; /* remove default outline when clicked */
+}
+
+.inputLabel {
+    font-size: 0.8em;
+    color: #bebebe;
+}
+
+.btn {
+    width: 5em;
+    height: 2em;
+}
+
+/*.inputBox {*/
+/*    width: 20em;*/
+/*    height: 2em;*/
+/*    !*background-color: red;*!*/
+/*}*/
