@@ -20,6 +20,7 @@
 .inputBox:hover {
     /*box-shadow: 0 0 4px white;*/
     border: 1px solid white;
+    filter: brightness(130%)
 }
 .inputBox:focus {
     outline: none; /* remove default outline when clicked */

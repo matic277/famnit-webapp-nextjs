@@ -9,8 +9,8 @@ import Image from 'next/image'
 import logo from "../public/sticky-note1.svg"
 
 const Navbar = () => {
-    const [isOpen,setIsOpen] = useState(false);
-    const openMenu= ()=> setIsOpen(!isOpen);
+    const [isOpen, setIsOpen] = useState(false);
+    const openMenu = () => setIsOpen(!isOpen);
 
     return (
         /*
@@ -23,7 +23,6 @@ const Navbar = () => {
         </nav>
          */
 
-        // Image by <a href="https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=147054">OpenClipart-Vectors</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=147054">Pixabay</a>
 
         <header className={styles2.header}>
             <nav className={styles.navbar}>
@@ -31,9 +30,10 @@ const Navbar = () => {
                 {/*    <a className={styles.navlogo}>[BrandLogo]</a>*/}
                 {/*</Link>*/}
 
+                {/*Image by <a href="https://pixabay.com/users/openclipart-vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=147054">OpenClipart-Vectors</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=147054">Pixabay</a>*/}
                 {/*<Image className={styles.logo} src={logo} alt={"?logo_image?"}/>*/}
 
-                <div className={styles.navmenu}>
+                <div className={isOpen === false ? styles.navmenu : styles.navmenu +' '+ styles.active}>
                     <div className={styles.navitem}>
                         <Link href='/' className={isOpen === false ? styles.navlink : styles.navlink+' '+styles.active} onClick={openMenu}>
                             Home
