@@ -14,16 +14,14 @@
     margin-top: 3px;
     padding-left: 2px;
 
-    border: 0;
-    /*border: 0.5rem outset pink;*/
-    /*outline: 1px solid khaki;*/
+    border: 1px solid transparent; /* prevent element resize on hover */
     border-radius: 5px;
 }
 .inputBox:hover {
-    box-shadow: 0 0 4px white;
+    /*box-shadow: 0 0 4px white;*/
+    border: 1px solid white;
 }
 .inputBox:focus {
-    box-shadow: 0 0 4px white;
     outline: none; /* remove default outline when clicked */
 }
 

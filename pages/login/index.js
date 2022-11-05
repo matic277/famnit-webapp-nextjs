@@ -31,7 +31,6 @@ export default function Login() {
                     <button className={styles.btn} type="submit">Sign in</button>
                 </form>
             </main>
-
         </>
     )
 }
