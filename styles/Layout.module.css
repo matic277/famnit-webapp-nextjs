@@ -1,0 +1,117 @@
+.header{
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    /*align-items: center;*/
+    padding: 1rem 0rem 0.6rem 0rem;
+
+    border-bottom: 2px solid #475569;
+}
+
+.hamburger {
+    display: none;
+}
+
+.bar {
+    display: block;
+    width: 35px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: #222222;
+}
+
+.navmenu {
+    /*center navbar horizontally*/
+    margin: 0 auto;
+    display: flex;
+    /*justify-content: space-between;*/
+    align-items: flex-end;
+}
+
+.navitem {
+    margin-left:  3.5rem;
+    margin-right: 3.5rem;
+
+    bottom: 0;
+}
+
+.navlink{
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #9a9a9a;
+    text-transform: lowercase;
+
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.navlink:hover{
+
+    color: white;
+    transition: color 0.3s, text-shadow 0.3s;
+
+    text-shadow: 0 0 2px white;
+
+    /*border-radius: 10px;*/
+    /*background-color: #0070f3;*/
+
+    /*transition: text-shadow 0.3s;*/
+    /*text-shadow: 0 0 10px #1a0896, 0 0 10px #1a0896, 0 0 10px #1a0896, 0 0 10px #1a0896, 0 0 10px #1a0896, 0 0 10px #1a0896, 0 0 10px #1a0896, 0 0 10px #1a0896, 0 0 10px #1a0896;*/
+}
+
+.navlogo {
+    font-size: 2.1rem;
+    font-weight: 500;
+    color: #482ff7;
+}
+
+/*@media only screen and (max-width: 768px) {*/
+/*    .navmenu {*/
+/*        position: fixed;*/
+/*        left: -100%;*/
+/*        top: 5rem;*/
+/*        flex-direction: column;*/
+/*        background-color: #fff;*/
+/*        width: 100%;*/
+/*        border-radius: 10px;*/
+/*        text-align: center;*/
+/*        transition: 0.3s;*/
+/*        box-shadow:*/
+/*                0 10px 27px rgba(0, 0, 0, 0.05);*/
+/*    }*/
+
+/*    .navmenu.active {*/
+/*        left: 0;*/
+/*    }*/
+
+/*    .navitem {*/
+/*        margin: 2.5rem 0;*/
+/*    }*/
+
+/*    !*.hamburger {*!*/
+/*    !*    display: block;*!*/
+/*    !*    cursor: pointer;*!*/
+/*    !*}*!*/
+
+/*    !*.hamburger.active .bar:nth-child(2) {*!*/
+/*    !*    opacity: 0;*!*/
+/*    !*}*!*/
+
+/*    !*.hamburger.active .bar:nth-child(1) {*!*/
+/*    !*    -webkit-transform: translateY(8px) rotate(45deg);*!*/
+/*    !*    transform: translateY(8px) rotate(45deg);*!*/
+/*    !*}*!*/
+
+/*    !*.hamburger.active .bar:nth-child(3) {*!*/
+/*    !*    -webkit-transform: translateY(-8px) rotate(-45deg);*!*/
+/*    !*    transform: translateY(-8px) rotate(-45deg);*!*/
+/*    !*}*!*/
+/*}*/
+
+/*.footer {*/
+/*    font-size: 1.5rem;*/
+/*}*/
