@@ -1,22 +1,53 @@
+.container {
+    background-color: red;
+    border: 1px solid white;
+}
+
+
 .formRegister {
     position: absolute;
     left: 50%;
     top: 40%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+
+    /*border: 1px solid white;*/
 }
 
-.label {
-    font-size: 0.8em;
-    color: #bebebe;
-}
+/*.labelInitial {*/
+/*    font-size: 0.8em;*/
+/*    color: #bebebe;*/
+/*}*/
+/*.labelBad {*/
+/*    font-size: 0.8em;*/
+/*    color: red;*/
+/*}*/
+/*.labelOk {*/
+/*    font-size: 0.8em;*/
+/*    color: green;*/
+/*}*/
+
+/*.inputBoxInitial {*/
+/*    width: 20em;*/
+/*    height: 2em;*/
+/*    !*background-color: red;*!*/
+/*}*/
+
+/*.inputBoxBad {*/
+/*    width: 20em;*/
+/*    height: 2em;*/
+/*    border: 1px solid red;*/
+/*}*/
+/*.inputBoxOk {*/
+/*    width: 20em;*/
+/*    height: 2em;*/
+/*    border: 1px solid green;*/
+/*}*/
 
 .btn {
     width: 5em;
-    height: 2em;
+    height: 3em;
 }
-
-
 
 /*.form-signin .checkbox {*/
 /*    font-weight: 400;*/
@@ -38,8 +69,3 @@
 /*    border-top-right-radius: 0;*/
 /*}*/
 
-.inputBox {
-    width: 20em;
-    height: 2em;
-    /*background-color: red;*/
-}

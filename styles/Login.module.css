@@ -6,8 +6,8 @@
     transform: translate(-50%, -50%);
 }
 
-/*Input boxes and labels*/
-.inputBox {
+/* inputs */
+.inputBoxInitial {
     width: 20em;
     height: 2em;
 
@@ -17,24 +17,57 @@
     border: 1px solid transparent; /* prevent element resize on hover */
     border-radius: 5px;
 }
-.inputBox:hover {
+.inputBoxInitial:hover {
     /*box-shadow: 0 0 4px white;*/
     border: 1px solid white;
     filter: brightness(130%)
 }
-.inputBox:focus {
+.inputBoxInitial:focus {
     outline: none; /* remove default outline when clicked */
 }
+.inputBoxBad {
+    width: 20em;
+    height: 2em;
 
-.inputLabel {
+    margin-top: 3px;
+    padding-left: 2px;
+
+    border: 1px solid red; /* prevent element resize on hover */
+    border-radius: 5px;
+}
+.inputBoxOk {
+    width: 20em;
+    height: 2em;
+
+    margin-top: 3px;
+    padding-left: 2px;
+
+    border: 1px solid green; /* prevent element resize on hover */
+    border-radius: 5px;
+}
+
+
+/* labels */
+.labelInitial {
     font-size: 0.8em;
     color: #bebebe;
 }
+.labelBad {
+    font-size: 0.8em;
+    color: red;
+}
+.labelOk {
+    font-size: 0.8em;
+    color: green;
+}
+
+
 
 .btn {
     width: 5em;
     height: 2em;
 }
+
 
 /*.inputBox {*/
 /*    width: 20em;*/
