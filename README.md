@@ -1,3 +1,25 @@
+# Podatkovno inženirstvo in distribuirani informacijski sistemi
+### Project seminar
+### Matic Adamič, 89202071
+
+## Sticky notes in Nextjs
+
+## 1. About Nextjs
+Nextjs is relatively new Javascript/Typescript framework, built on top of the Reactjs framework. It has been in development sice late 2016, by Vercel.
+
+It is both a front-end and a back-end framework (full-stack). It offers server-side rendering as well as simple static pages. It offers a simplified abstraction for easier developmet of operations such: data fetching and routing.
+
+Since it is a full-stack framework, it’s possible to have both the API, font-end and back-end code in the same project. Some of the code will be executed in the browser on client-side, and the API call consumers are executed on the server-side, for example, database queries and caching.
+
+Some of the cons is that it is a new framework. New versions are subject to braking changes. It is also reported that state management is lacking, meaning you have to bring in other state managing libraries that do it for you.
+
+## 2. Sticky notes
+Simple website about posting notes. Users are free to browse public notes or create them themselves. Registration is possible. When a registered user creates a new note, he can choose to share it with a list of other registered users, or just post it publicly. Notes posted by registered users can be edited or they can modify the users which can see the note. 
+Public notes can not be edited or deleted after posting. Each note will have a TTL, and will be deleted after that time.
+
+
+## ----- NextJs default README -----
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
