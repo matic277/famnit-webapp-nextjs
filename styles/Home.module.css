@@ -11,68 +11,125 @@
     display: inline-block;
     /*background-color: #482ff7;*/
 
-    width:  9em;
+    width:  10em;
     height: 3em;
 
     background-color: black;
-    border: 2px solid #bbbbbb;
+    border: 1px solid #bbbbbb;
     border-radius: 1em;
 
-
     transition: all 0.3s ease-in-out;
+}
+.addNoteText {
+    /*background-color: red;*/
+    font-weight: 500;
+
+}
+
+.addNoteName {
+    /*transition-property: transform;*/
+    /*animation-duration: 0.5s;*/
+    /*animation-timing-function: ease-in-out;*/
+    /*animation-iteration-count: infinite;*/
+}
+
+/*animating everything as a whole*/
+.addNoteContainer:hover .popupNoteContainer{
+    display: inline-block;
+    /*transition: all 0.1s ease-in-out;*/
+    animation-name: scaling;
+    animation-iteration-count: 1;
 }
 .addNoteContainer:hover {
     transition: all 0.3s ease-in-out;
     height: 20em;
     width: 20em;
 }
-.addNoteContainer:hover .popupNoteContainer{
-    transition-delay: 3s;
-    /*transition: all 0.3s ease-in-out;*/
-    display: inline-block;
-}
+/*animating each component individually*/
+/*.addNoteContainer:hover .addNoteBtn {*/
+/*    transition: all 2s ease-in-out;*/
+/*    animation-name: scaling;*/
+/*    animation-iteration-count: 1;*/
+/*}*/
+/*.addNoteContainer:hover .addNoteContent {*/
+/*    transition: all 2s ease-in-out;*/
+/*    animation-name: scaling;*/
+/*    animation-iteration-count: 1;*/
+/*}*/
+/*.addNoteContainer:hover .addNoteName {*/
+/*    transition: all 2s ease-in-out;*/
+/*    animation-name: scaling;*/
+/*    animation-iteration-count: 1;*/
+/*}*/
 
 .popupNoteContainer {
-    transition: all 1s ease-in-out;
+    /*transition: all 0.5s ease-in-out;*/
     display: none;
 
     /*background-color: #482ff7;*/
     height: 80%;
+
+    transition-property: transform;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
 }
 
 .addNoteInputLabel {
     color: #bebebe;
     font-size: 0.8em;
+
+    /*transition-property: transform;*/
+    /*animation-duration: 1s;*/
+    /*animation-timing-function: ease-in-out;*/
+    /*animation-iteration-count: infinite;*/
 }
 
 .addNoteContent {
-    height: 75%;
+    height: 55%;
     width: 100%;
+
+    /*transition-property: transform;*/
+    /*animation-duration: 1s;*/
+    /*animation-timing-function: ease-in-out;*/
+    /*animation-iteration-count: infinite;*/
 }
+
 
 .addNoteBtn {
-    margin-top: 15px;
+    margin-top: 0.75em;
+    height: 2.5em;
+    width: 5em;
+
+    /*transition-property: transform;*/
+    /*animation-duration: 1s;*/
+    /*animation-timing-function: ease-in-out;*/
+    /*animation-iteration-count: infinite;*/
+
+    /*animation: fadeIn 5s;*/
+    /*-webkit-animation: fadeIn 5s;*/
 }
 
-.addNote {
-    padding-left: 1em;
-    padding-right: 1em;
-    padding-bottom: 0.7em;
-    padding-top: 0.7em;
-
-    display: inline-block;
-    text-align: center;
-    /*width: max-content;*/
-
-    font-weight: bold;
-    color: white;
-
-
-
-    transition: all 0.3s ease-in-out;
+@keyframes scaling {
+    0% {
+        transform:
+                scale(0)
+        ;
+    }
+    50% {
+        transform:
+                scale(0.2)
+        ;
+    }
+    100% {
+        transform:
+                scale(1)
+        ;
+    }
 }
 
 
+/*------------------------ CONTENT NOTES ------------------------*/
 .notesContainer {
 
 }
