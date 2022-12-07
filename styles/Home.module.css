@@ -11,7 +11,7 @@
     display: inline-block;
     /*background-color: #482ff7;*/
 
-    width:  10em;
+    width:  6em;
     height: 3em;
 
     background-color: black;
@@ -126,45 +126,4 @@
                 scale(1)
         ;
     }
-}
-
-
-/*------------------------ CONTENT NOTES ------------------------*/
-.notesContainer {
-
-}
-
-.note {
-    width: max-content;
-    margin: 2em;
-    border: 1px solid #646464;
-
-    border-radius: 0.5em;
-
-}
-
-.noteName {
-    background-color: black;
-    font-weight: 500;
-    height: 30%;
-
-    padding: 0.3em;
-    padding-left: 0.7em;
-    padding-right: 0.7em;
-
-    border-top-left-radius: 0.5em;
-    border-top-right-radius: 0.5em;
-}
-
-.noteContentContainer {
-    background-color: black;
-    height: 70%;
-
-    border-bottom-left-radius: 0.5em;
-    border-bottom-right-radius: 0.5em;
-}
-
-.noteContent {
-    padding: 0.25em;
-    color: #707070;
 }

@@ -1,8 +1,26 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { Note } from './Note.js'
+import NotesList from "../components/NotesList";
 
-export default function Home() {
+export default function Home({ notes }) {
+
+    for (let note in notes) {
+        note.timestamp = Date.now();
+    }
+    console.log(notes);
+
+    // const note = ({ note }) => {
+    //     return (<>
+    //                 <div>Name={note.name}; Content={note.content}</div>
+    //             </>);
+    // }
+
+    function onAddNoteClick(event) {
+        event.preventDefault(); // prevent page reload
+    }
+
     return (
         <>
             <div className={styles.contentContainer}>
@@ -16,22 +34,27 @@ export default function Home() {
 
                             <label className={styles.addNoteInputLabel}>Content</label><br/>
                             <textarea className={styles.addNoteContent}></textarea><br/>
-                            <button className={styles.addNoteBtn}>Add</button>
+                            <button className={styles.addNoteBtn} onClick={(e) => onAddNoteClick(e)} >Add</button>
                         </div>
                     </div>
                 </div>
 
                 <div className={styles.content}>
-                    <div className={styles.note}>
-
-                        <div className={styles.noteName}>note name</div>
-                        <div className={styles.noteContentContainer}>
-                            <div className={styles.noteContent}>content</div>
-                        </div>
-                    </div>
+                    <NotesList notes={notes}/>
                 </div>
 
             </div>
         </>
     )
+}
+
+export const getStaticProps = async () => {
+    const res = await fetch(
+        "https://jsonplaceholder.typicode.com/posts?_limit=3");
+    const notes = await res.json();
+    return {
+        props: {
+            notes
+        }
+    };
 }

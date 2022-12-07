@@ -1,0 +1,108 @@
+/*------------------------ CONTENT NOTES ------------------------*/
+.note {
+    min-width: 100px;
+    /* min-height: 100px; */
+    max-width: 500px;
+    max-height: 300px;
+
+    margin: 2em;
+    border: 1px solid #646464;
+
+    /* background-color: red; */
+
+    border-radius: 0.5em;
+}
+.note:hover {
+    color: white;
+    border: 1px solid #b6b6b6;
+}
+.note:hover .noteContent{
+    overflow: visible;
+    /* background-color: #482ff7; */
+
+    filter: brightness(200%);
+    height: 100px;   
+}
+.note:hover .noteInfo{
+    filter: brightness(200%);
+}
+
+.noteTitle {
+    background-color: black;
+    font-weight: 500;
+    height: 30%;
+
+    /* padding around text */
+    padding: 0.3em;
+    padding-left: 0.7em;
+    padding-right: 0.7em;
+
+    /* top rounded corners */
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+}
+
+.noteInfo {
+    /* display: inline-block; */
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color: black;
+
+    font-size: small;
+    color: rgb(58, 59, 112);
+
+    /* padding around text */
+    padding: 0.3em;
+    padding-left: 0.9em;
+}
+.noteAuthor, .noteTimestamp{
+    display: inline;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    background-color: black;
+}
+
+.noteContentContainer {
+    background-color: black;
+    height: 70%;
+
+    /* bottom rounded corners */
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+}
+
+.noteContent {
+    /* stick to top, right below note title */
+    margin-top: 0px;
+
+    /* leave no space after content, wrap note */
+    margin-bottom: 0px;
+
+    /* bottom rounded corners */
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+
+    /*content text color*/
+    color: #707070;
+
+    /* padding around text */
+    padding: 0.3em;
+    padding-left: 0.7em;
+    padding-right: 0.7em;
+
+    /* hide overfill */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    /* TODO NOT WORKING */
+    word-break: break-all;
+
+    /*
+        TODO NOT WORKING PROPERLY 
+        removing height:30px removes transition effect - WHY?
+    */
+    transition:all .25s ease-in-out;
+    height: 30px;
+}
+
