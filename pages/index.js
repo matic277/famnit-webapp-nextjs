@@ -6,16 +6,13 @@ import NotesList from "../components/NotesList";
 
 export default function Home({ notes }) {
 
-    for (let note in notes) {
-        note.timestamp = Date.now();
+
+    for (let i=0; i < notes.length; i++) {
+        let d = new Date();
+        notes[i].timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
     }
     console.log(notes);
-
-    // const note = ({ note }) => {
-    //     return (<>
-    //                 <div>Name={note.name}; Content={note.content}</div>
-    //             </>);
-    // }
+    
 
     function onAddNoteClick(event) {
         event.preventDefault(); // prevent page reload
