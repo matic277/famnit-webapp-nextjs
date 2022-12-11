@@ -1,10 +1,16 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+
 import React, { useState } from 'react';
+import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
+
 import NotesList from "../components/NotesList";
 
 export default function Home({ notesList }) {
+    // Auth0 user state
+    const { user, isLoading } = useUser();
+
     // Standard react stuff to change state on client and server
     const [notes, setNotes] = useState(notesList);
 
@@ -15,7 +21,6 @@ export default function Home({ notesList }) {
     }
     //console.log(notesList);
 
-    
     
     function onAddNoteClick(event) {        
         const title   = document.getElementById("noteTitle");
