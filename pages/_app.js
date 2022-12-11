@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 // import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 import Layout from "../components/Layout";
@@ -6,9 +7,11 @@ import Layout from "../components/Layout";
 function MyApp({ Component, pageProps }) {
   return (
       // Wrapping all pages with my Layout
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <UserProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </UserProvider>
   );
 }
 
