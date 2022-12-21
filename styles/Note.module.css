@@ -21,7 +21,7 @@
     /* background-color: #482ff7; */
 
     filter: brightness(200%);
-    height: 100px;   
+    max-height: 100vh; /* NOTE: for transitions to work properly (to resize to fit content), max-height must be used instead of height */
 }
 .note:hover .noteInfo{
     filter: brightness(200%);
@@ -91,18 +91,18 @@
     padding-right: 0.7em;
 
     /* hide overfill */
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 
-    /* TODO NOT WORKING */
     word-break: break-all;
+    word-wrap: pre;
 
-    /*
-        TODO NOT WORKING PROPERLY 
-        removing height:30px removes transition effect - WHY?
-    */
-    transition:all .25s ease-in-out;
-    height: 30px;
+    transition:all .3s ease-in-out;
+    max-height: 2.2em; /* NOTE: for transitions to work properly (to resize to fit content), max-height must be used instead of height */
 }
-
+/* .noteContent:hover {
+    background-color: aqua;
+}
+.noteContentContainer:hover {
+    background-color: rebeccapurple;
+} */

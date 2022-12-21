@@ -20,7 +20,6 @@ export default function Home({ notesList }) {
         notesList[i].timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
     }
     //console.log(notesList);
-
     
     function onAddNoteClick(event) {        
         const title   = document.getElementById("noteTitle");
@@ -41,8 +40,6 @@ export default function Home({ notesList }) {
         //       immediately show note as if it's added. Then when we get a response
         //       from the server, set the id of the note - this will improve perceived responsivness.
     }
-
-
 
     return (
         <>
