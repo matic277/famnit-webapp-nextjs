@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from "../../styles/Login.module.css";
 import styles2 from "../../styles/Register.module.css";
 
@@ -156,8 +157,11 @@ export default function Register() {
                     </div>
 
                     <br/>
-
-                    <button id="btn" className={styles.btn} type="submit" onClick={(e) => onRegisterClick(e)}>Register</button>
+                    
+                    <div className={styles2.buttonContainer}>
+                        <button id="btn" className={styles.btn} type="submit" onClick={(e) => onRegisterClick(e)}>Register</button>
+                        <Link href="/api/auth/login" className={styles2.auth0UUrl}> or register with auth0</Link>
+                    </div> 
                 </form>
             </main>
         </>

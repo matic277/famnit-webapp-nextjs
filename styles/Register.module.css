@@ -3,7 +3,6 @@
     border: 1px solid white;
 }
 
-
 .formRegister {
     position: absolute;
     left: 50%;
@@ -14,58 +13,14 @@
     /*border: 1px solid white;*/
 }
 
-/*.labelInitial {*/
-/*    font-size: 0.8em;*/
-/*    color: #bebebe;*/
-/*}*/
-/*.labelBad {*/
-/*    font-size: 0.8em;*/
-/*    color: red;*/
-/*}*/
-/*.labelOk {*/
-/*    font-size: 0.8em;*/
-/*    color: green;*/
-/*}*/
-
-/*.inputBoxInitial {*/
-/*    width: 20em;*/
-/*    height: 2em;*/
-/*    !*background-color: red;*!*/
-/*}*/
-
-/*.inputBoxBad {*/
-/*    width: 20em;*/
-/*    height: 2em;*/
-/*    border: 1px solid red;*/
-/*}*/
-/*.inputBoxOk {*/
-/*    width: 20em;*/
-/*    height: 2em;*/
-/*    border: 1px solid green;*/
-/*}*/
-
-.btn {
-    width: 5em;
-    height: 3em;
+.auth0UUrl {
+    /* position: absolute; */
+    float: right;
+    margin-top: 0.2em;
+    font-size: 0.8em;
+    color: #bebebe;
+    color: rgb(57, 57, 235);
 }
-
-/*.form-signin .checkbox {*/
-/*    font-weight: 400;*/
-/*}*/
-
-/*.form-signin .form-floating:focus-within {*/
-/*    z-index: 2;*/
-/*}*/
-
-/*.form-signin input[type="email"] {*/
-/*    margin-bottom: -1px;*/
-/*    border-bottom-right-radius: 0;*/
-/*    border-bottom-left-radius: 0;*/
-/*}*/
-
-/*.form-signin input[type="password"] {*/
-/*    margin-bottom: 10px;*/
-/*    border-top-left-radius: 0;*/
-/*    border-top-right-radius: 0;*/
-/*}*/
-
+.auth0UUrl:hover {
+    text-decoration: underline;
+}
