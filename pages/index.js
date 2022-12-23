@@ -7,6 +7,7 @@ import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 
 import NotesList from "../components/NotesList";
 
+
 export default function Home({ notesList }) {
     // Auth0 user state
     const { user, isLoading } = useUser();
@@ -15,11 +16,14 @@ export default function Home({ notesList }) {
     const [notes, setNotes] = useState(notesList);
 
     // Append timestamp to dummy data
-    for (let i=0; i < notesList.length; i++) {
-        let d = new Date();
-        notesList[i].timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
-    }
+    // for (let i=0; i < notesList.length; i++) {
+    //     let d = new Date();
+    //     notesList[i].timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
+    // }
     //console.log(notesList);
+
+    // Track state of fetch index, increment on every button "Load more" press
+    const [fetchIndex, setIndex] = useState(0);
     
     function onAddNoteClick(event) {        
         const title   = document.getElementById("noteTitle");
@@ -41,6 +45,25 @@ export default function Home({ notesList }) {
         //       from the server, set the id of the note - this will improve perceived responsivness.
     }
 
+    const fetchMoreNotes = async (index) => {
+        const res = await fetch(
+            //"https://jsonplaceholder.typicode.com/posts?_limit=3"
+            "http://localhost:3000/api/notes?index=" + index
+            );
+        const newNotes = await res.json();
+        return newNotes;
+    }
+    //let fetchIndex = 1;
+    function loadMoreNotes(event) {
+        console.log("Getting new notes with index " + fetchIndex);
+        const notesPromise = fetchMoreNotes(fetchIndex);
+        notesPromise.then(function(newNotes) {
+            newNotes.forEach(n  => { notes.push(n); console.log("Received notedid=", n.id_note)});
+            setNotes([...notes]);
+         });
+         setIndex(1 + fetchIndex);
+    }
+
     return (
         <>
             <div className={styles.contentContainer}>
@@ -53,9 +76,11 @@ export default function Home({ notesList }) {
 
                             <label className={styles.addNoteInputLabel}>Content</label><br/>
                             <textarea id="noteContent" className={styles.addNoteContent}></textarea><br/>
-                            <button className={styles.addNoteBtn} onClick={(e) => onAddNoteClick(e)} >Add</button>
+                            <button className={styles.addNoteBtn} onClick={(e) => onAddNoteClick(e)}>Add</button>
                         </div>
                     </div>
+                    <br/>
+                    <button onClick={(e) => loadMoreNotes(e)}>Load more</button>
                 </div>
 
                 <div className={styles.content}>
@@ -68,7 +93,9 @@ export default function Home({ notesList }) {
 
 export const getStaticProps = async () => {
     const res = await fetch(
-        "https://jsonplaceholder.typicode.com/posts?_limit=3");
+        //"https://jsonplaceholder.typicode.com/posts?_limit=3"
+        "http://localhost:3000/api/notes?index=0"
+        );
     const notesList = await res.json();
     return {
         props: {
