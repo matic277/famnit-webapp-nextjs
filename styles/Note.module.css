@@ -27,7 +27,40 @@
     filter: brightness(200%);
 }
 
+.titleCotainer {
+    width: 100%;
+    background-color: black;
+
+    display: flex;
+    justify-content: space-between;
+
+    /* top rounded corners */
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+
+}
+.delete {
+    /* text and padding */
+    color: rgb(100, 0, 0);
+    padding: 0.3em;
+
+    /* top rounded corners */
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+
+    /* background-color: black; */
+}
+.delete:hover {
+    color: rgb(223, 0, 0);
+    text-decoration: underline;
+    cursor: pointer;
+}
+.deleteHidden {
+    display: none;
+}
 .noteTitle {
+    /* float: left; */
+
     background-color: black;
     font-weight: 500;
     height: 30%;
@@ -49,7 +82,8 @@
     background-color: black;
 
     font-size: small;
-    color: rgb(58, 59, 112);
+    font-weight: 500;
+    color: rgb(73, 75, 143);
 
     /* padding around text */
     padding: 0.3em;

@@ -29,10 +29,15 @@ export default function Home({ notesList }) {
         const title   = document.getElementById("noteTitle");
         const content = document.getElementById("noteContent");
         // TODO refactor: make a proper "Note" class
+        console.log("user: ", user ? user.email : "Anonymous");
+        const d = new Date();
+        const timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
         const note = {
-            id: undefined,
+            id: 5,
             title: title.value,
-            body: content.value,
+            content: content.value,
+            author: user ? user.email : "Anonymous",
+            timestamp: timestamp
         };
 
         // Update state, adding new note
@@ -53,15 +58,20 @@ export default function Home({ notesList }) {
         const newNotes = await res.json();
         return newNotes;
     }
-    //let fetchIndex = 1;
     function loadMoreNotes(event) {
-        console.log("Getting new notes with index " + fetchIndex);
-        const notesPromise = fetchMoreNotes(fetchIndex);
+        const index = 1 + fetchIndex;
+        setIndex(1 + fetchIndex);
+        console.log("Getting new notes with index", index);
+        const notesPromise = fetchMoreNotes(index);
         notesPromise.then(function(newNotes) {
-            newNotes.forEach(n  => { notes.push(n); console.log("Received notedid=", n.id_note)});
+            newNotes.forEach(n  => {
+                const author = (n.id_note == undefined || n.id_note == null) ? "Anonymous" : "TODO"; // TODO alter select sql to also return author name
+                console.log("Received notedid=", n.id_note, "by", author);
+                n.author = author;
+                notes.push(n);
+            });
             setNotes([...notes]);
-         });
-         setIndex(1 + fetchIndex);
+         });         
     }
 
     return (

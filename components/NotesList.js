@@ -7,7 +7,7 @@ const NoteList = ({notes}) => {
         //<div className={styles.note}>
             //{
                 notes.map((note) => (
-                    <NoteWebElt key={note.id} note={note}/>
+                    <NoteWebElt key={note.id_note} note={note}/>
                     // <div className={styles.note} key={note.id}>
                     //     <div className={styles.noteName}>{note.title}</div>
                     //     <div className={styles.noteContentContainer}>

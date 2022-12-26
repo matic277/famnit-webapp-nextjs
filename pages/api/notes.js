@@ -8,7 +8,7 @@ export default function handler(req, res) {
         console.log("Trying to fetch data from db...");
         const queryIndex = req.query.index;
         const startIndex = queryIndex * fetchSize;
-        const endIndex   = startIndex + fetchSize;
+        const endIndex   = startIndex + fetchSize - 1;
         console.log("Query value: ", queryIndex, " -> ", startIndex, " ", endIndex);
         const query = 'SELECT * FROM note WHERE id_note BETWEEN ' + startIndex + " AND " + endIndex;
         // const values = [req.body.content];
