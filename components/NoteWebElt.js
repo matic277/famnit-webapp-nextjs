@@ -14,7 +14,7 @@ const NoteWebElt = ({note}) => {
         <div className={styles.note}>
             <div className={styles.titleCotainer}>
                 <div className={styles.noteTitle}>{note.title}</div>
-                <div className={user.email == note.author ? styles.delete : styles.deleteHidden}
+                <div className={(user && user.email == note.author) ? styles.delete : styles.deleteHidden}
                      onClick={(e) => onDeleteClicked(e)}>delete</div>
             </div>
             <div className={styles.noteInfo}>

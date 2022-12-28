@@ -1,4 +1,4 @@
-import conn from '../../lib/db'
+import conn from '../../../lib/db'
 
 const fetchSize = 3;
 

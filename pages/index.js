@@ -53,8 +53,8 @@ export default function Home({ notesList }) {
     const fetchMoreNotes = async (index) => {
         const res = await fetch(
             //"https://jsonplaceholder.typicode.com/posts?_limit=3"
-            "http://localhost:3000/api/notes?index=" + index
-            );
+            "http://localhost:3000/api/notes/stream?index=" + index
+        );
         const newNotes = await res.json();
         return newNotes;
     }
@@ -104,8 +104,8 @@ export default function Home({ notesList }) {
 export const getStaticProps = async () => {
     const res = await fetch(
         //"https://jsonplaceholder.typicode.com/posts?_limit=3"
-        "http://localhost:3000/api/notes?index=0"
-        );
+        "http://localhost:3000/api/notes/stream?index=0"
+    );
     const notesList = await res.json();
     return {
         props: {

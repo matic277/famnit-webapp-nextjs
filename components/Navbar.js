@@ -33,6 +33,14 @@ const Navbar = () => {
                             </Link>
                         </div>
                     </>)}
+                    {/* if used is logged in, show their notes */}
+                    {user && (<>
+                        <div className={styles.navitem}>
+                            <Link href='mynotes' className={isOpen === false ? styles.navlink : styles.navlink+' '+styles.active} onClick={openMenu}>
+                                my notes
+                            </Link>
+                        </div>
+                    </>)}
                     {!user && (<>
                         <div className={styles.navitem}>
                             <Link href='/api/auth/login' className={isOpen === false ? styles.navlink : styles.navlink+' '+styles.active} onClick={openMenu}>
