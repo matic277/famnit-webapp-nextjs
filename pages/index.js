@@ -43,7 +43,7 @@ export default function Home({ notesList }) {
             author: user ? user.email : "Anonymous",
             timestamp: timestamp
         };
-
+        
         // Update state, adding new note
         notes.push(note);
         setNotes([...notes]);
@@ -52,6 +52,14 @@ export default function Home({ notesList }) {
         // TODO: send to server ->  get back Id -> set Id (use callback)
         //       immediately show note as if it's added. Then when we get a response
         //       from the server, set the id of the note - this will improve perceived responsivness.
+
+        fetch('api/notes/create', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(note),
+        });
     }
 
     const fetchMoreNotes = async (index) => {
