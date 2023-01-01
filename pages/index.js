@@ -15,6 +15,10 @@ export default function Home({ notesList }) {
     // Standard react stuff to change state on client and server
     const [notes, setNotes] = useState(notesList);
 
+    // State of selected layout
+    // -> default layout at start is "1 x n"
+    const [layout, setLayout] = useState(1);
+
     // Append timestamp to dummy data
     // for (let i=0; i < notesList.length; i++) {
     //     let d = new Date();
@@ -74,6 +78,11 @@ export default function Home({ notesList }) {
          });         
     }
 
+    function onSetLayoutClick(size) {
+        setLayout(size);
+        console.log("layout is now:", size);
+    }
+
     return (
         <>
             <div className={styles.contentContainer}>
@@ -89,11 +98,26 @@ export default function Home({ notesList }) {
                             <button className={styles.addNoteBtn} onClick={(e) => onAddNoteClick(e)}>Add</button>
                         </div>
                     </div>
+
                     <br/>
-                    <button onClick={(e) => loadMoreNotes(e)}>Load more</button>
+                    <div className={styles.layoutOptionsContainer}>
+                        <div className={styles.selectLayoutText}>Select layout:</div>
+                        <div className={layout == 1 ? styles.layoutOptionSelected : styles.layoutOption} onClick={(e) => onSetLayoutClick(1)}>1 x n</div>
+                        <div className={layout == 2 ? styles.layoutOptionSelected : styles.layoutOption} onClick={(e) => onSetLayoutClick(2)}>2 x n</div>
+                        <div className={layout == 3 ? styles.layoutOptionSelected : styles.layoutOption} onClick={(e) => onSetLayoutClick(3)}>3 x n</div>
+                    </div>
                 </div>
 
-                <div className={styles.content}>
+                <br/>
+                <button onClick={(e) => loadMoreNotes(e)}>Load more</button>
+
+                {/* this does not work? -> layout does not change*/}
+                {/* <div className={'styles.notesContainer'+layout+'xn'}> */}
+                <div className={layout == 1 ? styles.notesContainer1xn :
+                                layout == 2 ? styles.notesContainer2xn :
+                                layout == 3 ? styles.notesContainer3xn :
+                                'throwerror'}>
+
                     <NotesList notes={notes}/>
                 </div>
             </div>
