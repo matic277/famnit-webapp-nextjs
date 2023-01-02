@@ -152,6 +152,8 @@ export const getStaticProps = async () => {
     }
     catch(err) {
         console.log("Err occured in (home) index getStaticProps, res=", res)
+        console.log("res.text=", res.text);
         console.log("Error:", err);
     }
+    return null;
 }
