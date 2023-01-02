@@ -65,7 +65,8 @@ export default function Home({ notesList }) {
     const fetchMoreNotes = async (index) => {
         const res = await fetch(
             //"https://jsonplaceholder.typicode.com/posts?_limit=3"
-            "http://localhost:3000/api/notes/stream?index=" + index
+            (process.env.environment == 'production' ? "https://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
+            "/api/notes/stream?index=" + index
         );
         const newNotes = await res.json();
         return newNotes;
@@ -109,10 +110,11 @@ export default function Home({ notesList }) {
 
                     <br/>
                     <div className={styles.layoutOptionsContainer}>
-                        <div className={styles.selectLayoutText}>Select layout:</div>
+                        <div className={styles.selectLayoutText}>Layout:</div>
                         <div className={layout == 1 ? styles.layoutOptionSelected : styles.layoutOption} onClick={(e) => onSetLayoutClick(1)}>1 x n</div>
                         <div className={layout == 2 ? styles.layoutOptionSelected : styles.layoutOption} onClick={(e) => onSetLayoutClick(2)}>2 x n</div>
                         <div className={layout == 3 ? styles.layoutOptionSelected : styles.layoutOption} onClick={(e) => onSetLayoutClick(3)}>3 x n</div>
+                        <div className={layout == 4 ? styles.layoutOptionSelected : styles.layoutOption} onClick={(e) => onSetLayoutClick(4)}>flow</div>
                     </div>
                 </div>
 
@@ -124,6 +126,7 @@ export default function Home({ notesList }) {
                 <div className={layout == 1 ? styles.notesContainer1xn :
                                 layout == 2 ? styles.notesContainer2xn :
                                 layout == 3 ? styles.notesContainer3xn :
+                                layout == 4 ? styles.notesContainerFlow :
                                 'throwerror'}>
 
                     <NotesList notes={notes}/>
@@ -136,7 +139,8 @@ export default function Home({ notesList }) {
 export const getStaticProps = async () => {
     const res = await fetch(
         //"https://jsonplaceholder.typicode.com/posts?_limit=3"
-        "http://localhost:3000/api/notes/stream?index=0"
+        (process.env.environment == 'production' ? "https://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
+        "/api/notes/stream?index=0"
     );
     const notesList = await res.json();
     return {

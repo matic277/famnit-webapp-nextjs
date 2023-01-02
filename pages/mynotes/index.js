@@ -59,7 +59,9 @@ export default function Mynotes({ notesList }) {
 }
 
 Mynotes.getInitialProps = async (ctx) => {
-    const res = await fetch('http://localhost:3000/api/notes/user?user_email=2'); // TODO set actual id
+    const res = await fetch(
+        (process.env.environment == 'production' ? "https://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
+        '/api/notes/user?user_email=2'); // TODO set actual id
     const notesList = await res.json();
     console.log("props: ", notesList);
     return { notesList };
