@@ -137,12 +137,12 @@ export default function Home({ notesList }) {
 }
 
 export const getStaticProps = async () => {
+    const res = await fetch(
+        //"https://jsonplaceholder.typicode.com/posts?_limit=3"
+        (process.env.environment == 'production' ? "http://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
+        "/api/notes/stream?index=0"
+    );
     try {
-        const res = await fetch(
-            //"https://jsonplaceholder.typicode.com/posts?_limit=3"
-            (process.env.environment == 'production' ? "https://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
-            "/api/notes/stream?index=0"
-        );
         const notesList = await res.json();
         return {
             props: {
@@ -151,6 +151,7 @@ export const getStaticProps = async () => {
         };
     }
     catch(err) {
-        console.log("Err occured in (home) index getStaticProps:", err);
+        console.log("Err occured in (home) index getStaticProps, res=", res)
+        console.log("Error:", err);
     }
 }
