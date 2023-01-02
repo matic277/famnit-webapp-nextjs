@@ -9,6 +9,11 @@ import NotesList from "../components/NotesList";
 
 
 export default function Home({ notesList }) {
+    if (notesList == undefined) {
+        return (<div> err occured, noteList is undefined</div>);
+    }
+
+    console.log("notesList=", notesList);
     // Auth0 user state
     const { user, isLoading } = useUser();
 
