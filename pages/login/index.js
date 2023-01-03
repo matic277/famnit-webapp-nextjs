@@ -1,10 +1,11 @@
-// import globalStyles from '../../styles/globals.css'
+import Link from 'next/link';
 import styles from '../../styles/Login.module.css'
+import styles2 from "../../styles/Register.module.css";
 
 import React, { useState, useEffect } from "react";
 
 export default function Login() {
-    function onSignInClick() {
+    function onLoginClick() {
         console.log("clicked")
     }
 
@@ -34,7 +35,12 @@ export default function Login() {
 
                     <br/>
 
-                    <button id="btn" className={styles.btn} type="submit" onClick={(e) => onSignInClick(e)}>Sign in</button>
+                    <div className={styles2.buttonContainer}>
+                        <button id="btn" className={styles.btn} type="submit" onClick={(e) => onLoginClick(e)}>Sign in</button>
+                        <Link href="/api/auth/login" className={styles2.auth0UUrl}>or sign in with auth0</Link>
+                    </div> 
+
+                    {/* <button id="btn" className={styles.btn} type="submit" onClick={(e) => onSignInClick(e)}>Sign in</button> */}
                 </form>
             </main>
         </>
