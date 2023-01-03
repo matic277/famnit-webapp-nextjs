@@ -58,16 +58,20 @@ const Navbar = () => {
                             About
                         </Link>
                     </div>
-                    <div className={styles.navitem}>
-                        <Link href='/login' className={isOpen === false ? styles.navlink : styles.navlink+' '+styles.active} onClick={openMenu}>
-                            Login
-                        </Link>
-                    </div>
-                    <div className={styles.navitem}>
-                        <Link href='/register' className={isOpen === false ? styles.navlink : styles.navlink+' '+styles.active} onClick={openMenu}>
-                            Register
-                        </Link>
-                    </div>
+                    {!user && (<>
+                        <div className={styles.navitem}>
+                            <Link href='/login' className={isOpen === false ? styles.navlink : styles.navlink+' '+styles.active} onClick={openMenu}>
+                                Login
+                            </Link>
+                        </div>
+                    </>)}
+                    {!user && (<>
+                        <div className={styles.navitem}>
+                            <Link href='/register' className={isOpen === false ? styles.navlink : styles.navlink+' '+styles.active} onClick={openMenu}>
+                                Register
+                            </Link>
+                        </div>
+                    </>)}
                 </div>
             </nav>
         </header>
