@@ -8,10 +8,9 @@ import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import NotesList from "../components/NotesList";
 
 
-export default function Home({  }) {
-    // if (notesList == undefined) {
-    //     return (<div> err occured, noteList is undefined</div>);
-    // }
+export default function Home() {
+    // Auth0 user state
+    const { user, isLoading } = useUser();
 
     // State of selected layout
     // -> default layout at start is "1 x n"
@@ -34,13 +33,8 @@ export default function Home({  }) {
     if (notesLoading) return (<div>Loading...</div>);
     if (!notes) return (<div>No notes</div>);
 
-    // Auth0 user state
-    const { user, isLoading } = useUser();
-
     // Standard react stuff to change state on client and server
     //const [notes, setNotes] = useState(notesList);
-
-
 
     // Append timestamp to dummy data
     // for (let i=0; i < notesList.length; i++) {
@@ -65,7 +59,7 @@ export default function Home({  }) {
         };
         
         // Update state, adding new note
-        notes.push(note);
+        notes.unshift(note);
         setNotes([...notes]);
         
         // TODO: perform content checking
