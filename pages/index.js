@@ -2,27 +2,45 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 
 import NotesList from "../components/NotesList";
 
 
-export default function Home({ notesList }) {
-    if (notesList == undefined) {
-        return (<div> err occured, noteList is undefined</div>);
-    }
+export default function Home({  }) {
+    // if (notesList == undefined) {
+    //     return (<div> err occured, noteList is undefined</div>);
+    // }
+    
+    // State of selected layout
+    // -> default layout at start is "1 x n"
+    const [layout, setLayout] = useState(1);
 
-    console.log("notesList=", notesList);
+    // Track state of fetch index, increment on every button "Load more" press
+    const [fetchIndex, setIndex] = useState(0);
+
+    const [notes, setNotes] = useState(null)
+    const [notesLoading, setNotesLoading] = useState(false)
+    useEffect(() => {
+        setNotesLoading(true);
+        fetch('/api/notes/stream?index=0')
+            .then((res) => res.json())
+            .then((data) => {
+                setNotes(data)
+                 setNotesLoading(false)
+            });
+    }, []);
+    if (notesLoading) return (<div>Loading...</div>);
+    if (!notes) return (<div>No notes</div>);
+
     // Auth0 user state
     const { user, isLoading } = useUser();
 
     // Standard react stuff to change state on client and server
-    const [notes, setNotes] = useState(notesList);
+    //const [notes, setNotes] = useState(notesList);
 
-    // State of selected layout
-    // -> default layout at start is "1 x n"
-    const [layout, setLayout] = useState(1);
+
 
     // Append timestamp to dummy data
     // for (let i=0; i < notesList.length; i++) {
@@ -30,9 +48,6 @@ export default function Home({ notesList }) {
     //     notesList[i].timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
     // }
     //console.log(notesList);
-
-    // Track state of fetch index, increment on every button "Load more" press
-    const [fetchIndex, setIndex] = useState(0);
     
     function onAddNoteClick(event) {        
         const title   = document.getElementById("noteTitle");
@@ -141,20 +156,20 @@ export default function Home({ notesList }) {
     )
 }
 
-export const getStaticProps = async () => {
-    const res = await fetch(
-        //"https://jsonplaceholder.typicode.com/posts?_limit=3"
-        (process.env.environment == 'production' ? "http://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
-        "/api/notes/stream?index=0"
-    );
-    try {
-        const notesList = await res.json();
-        return { props: { notesList } };
-    }
-    catch(err) {
-        console.log("Err occured in (home) index getStaticProps, res=", res)
-        console.log("res.text=", res.text);
-        console.log("Error:", err);
-    }
-    return { props: { ok: false, reason: "err occured" } };
-}
+// export const getStaticProps = async () => {
+//     const res = await fetch(
+//         //"https://jsonplaceholder.typicode.com/posts?_limit=3"
+//         (process.env.environment == 'production' ? "http://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
+//         "/api/notes/stream?index=0"
+//     );
+//     try {
+//         const notesList = await res.json();
+//         return { props: { notesList } };
+//     }
+//     catch(err) {
+//         console.log("Err occured in (home) index getStaticProps, res=", res)
+//         console.log("res.text=", res.text);
+//         console.log("Error:", err);
+//     }
+//     return { props: { ok: false, reason: "err occured" } };
+// }
