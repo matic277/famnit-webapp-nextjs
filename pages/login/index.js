@@ -4,8 +4,6 @@ import styles from '../../styles/Login.module.css'
 import React, { useState, useEffect } from "react";
 
 export default function Login() {
-
-
     function onSignInClick() {
         console.log("clicked")
     }

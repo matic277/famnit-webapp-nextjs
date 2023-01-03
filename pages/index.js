@@ -12,7 +12,7 @@ export default function Home({  }) {
     // if (notesList == undefined) {
     //     return (<div> err occured, noteList is undefined</div>);
     // }
-    
+
     // State of selected layout
     // -> default layout at start is "1 x n"
     const [layout, setLayout] = useState(1);
@@ -24,11 +24,11 @@ export default function Home({  }) {
     const [notesLoading, setNotesLoading] = useState(false)
     useEffect(() => {
         setNotesLoading(true);
-        fetch('/api/notes/stream?index=0')
+        fetch("/api/notes/stream?index=0")
             .then((res) => res.json())
             .then((data) => {
-                setNotes(data)
-                 setNotesLoading(false)
+                setNotes(data);
+                setNotesLoading(false);
             });
     }, []);
     if (notesLoading) return (<div>Loading...</div>);
@@ -73,19 +73,19 @@ export default function Home({  }) {
         //       immediately show note as if it's added. Then when we get a response
         //       from the server, set the id of the note - this will improve perceived responsivness.
 
-        fetch('api/notes/create', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(note),
-        });
+        // fetch('api/notes/create', {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(note),
+        // });
     }
 
     const fetchMoreNotes = async (index) => {
         const res = await fetch(
             //"https://jsonplaceholder.typicode.com/posts?_limit=3"
-            (process.env.environment == 'production' ? "https://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
+            //(process.env.environment == 'production' ? "https://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
             "/api/notes/stream?index=" + index
         );
         const newNotes = await res.json();
