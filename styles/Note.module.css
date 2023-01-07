@@ -39,7 +39,12 @@
     border-top-right-radius: 0.5em;
 
 }
-.delete {
+
+/* fontSize: 15, color: "blue"
+fontSize: 15, color: "blue"
+fontSize: 15, color: "blue" */
+
+.noteOptionsContainer {
     /* text and padding */
     color: rgb(100, 0, 0);
     padding: 0.3em;
@@ -50,14 +55,33 @@
 
     /* background-color: black; */
 }
-.delete:hover {
-    color: rgb(223, 0, 0);
-    text-decoration: underline;
-    cursor: pointer;
-}
-.deleteHidden {
+
+.noteOptionsContainerHidden {
     display: none;
 }
+.noteOption {
+    color: black;
+    cursor: pointer;
+    padding-left: 0.85em;
+    padding-right: 0.15em;
+    color: GRAY;
+}
+.noteOption:hover {
+    color: WHITE;
+    cursor: pointer;
+ }
+ .noteOptionDelete {
+    color: black;
+    cursor: pointer;
+    padding-left: 0.85em;
+    padding-right: 0.15em;
+    /* padding-right: 0.2em; */
+    color: GRAY;
+}
+ .noteOptionDelete:hover {
+    color: rgb(200, 0, 0);
+    cursor: pointer;
+ }
 .noteTitle {
     /* float: left; */
 

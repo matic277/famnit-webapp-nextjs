@@ -12,6 +12,18 @@ export default function Home() {
     // Auth0 user state
     const { user, isLoading } = useUser();
 
+    // TODO: getting userId from db is not needed?
+    //       just use email, should be unique anyways...?
+    // const [ userId, setUserId ] = useState(null); // Id of user in db
+    // if (user) {
+    //     fetch("/api/user/id?name=" + user.email)
+    //         .then((res) => res.json())
+    //         .then((user) => {
+    //             console.log("-----> Got user id=", user);
+    //             setUserId(user.id_user);
+    //         });
+    // }
+
     // State of selected layout
     // -> default layout at start is "1 x n"
     const [layout, setLayout] = useState(1);
@@ -19,8 +31,8 @@ export default function Home() {
     // Track state of fetch index, increment on every button "Load more" press
     const [fetchIndex, setIndex] = useState(0);
 
-    const [notes, setNotes] = useState(null)
-    const [notesLoading, setNotesLoading] = useState(false)
+    const [notes, setNotes] = useState(null);
+    const [notesLoading, setNotesLoading] = useState(false);
     useEffect(() => {
         setNotesLoading(true);
         fetch("/api/notes/stream?index=0")
@@ -52,6 +64,7 @@ export default function Home() {
         const timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
         const note = {
             id: 5,
+            id_user: 1,
             title: title.value,
             content: content.value,
             author: user ? user.email : "Anonymous",
@@ -66,14 +79,16 @@ export default function Home() {
         // TODO: send to server ->  get back Id -> set Id (use callback)
         //       immediately show note as if it's added. Then when we get a response
         //       from the server, set the id of the note - this will improve perceived responsivness.
+        
+        console.log("body=", JSON.stringify(note));
 
-        // fetch('api/notes/create', {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(note),
-        // });
+        fetch('api/notes/create', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(note),
+        });
     }
 
     const fetchMoreNotes = async (index) => {

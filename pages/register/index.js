@@ -30,11 +30,10 @@ export default function Register() {
         //checkPasswords(pw1, pw2);
     }
 
-
     function usernameAvailable(name) {
         return true; // TODO implement
     }
-
+    
     function onUsrUnfocused(usrInput) {
         let usrElt = usrInput.target;
         let usr = usrElt.value;
