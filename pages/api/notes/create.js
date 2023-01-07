@@ -1,27 +1,15 @@
 import { use } from 'react';
 import conn from '../../../lib/db'
 
+import * as Const from '../../../lib/constants';
+
 async function getUserId(username)
 {
     try {
         const query = 'SELECT id_user FROM public.user WHERE name=$1';
-        // console.log("3");
         const result = await conn.query(query, [username]);
         const response = result.rows[0].id_user;
-        // console.log("4 -> response", response);
         return response;
-        // result.then(r => {
-        //     console.log("Got data for userId query=", r.rows);
-        //     if (r.rows.length > 1) {
-        //         console.error("More than one user by that name:", r.rows);
-        //     }
-        //     if (r.rows.length == 0) {
-        //         console.error("Zero users by that name");
-        //     }
-        //     const response = r.rows[0].id_user;
-        //     console.log("response=", response);
-        //     return response;
-        // });
     } catch (err) {
         console.log("Error occured getting id of user " + username + ":", err);
     }
@@ -40,7 +28,7 @@ export default async function handler(req, res) {
 
         // get user_id first if needed
         const username = req.body.username;
-        let userId = username ? await getUserId(username) : null;
+        let userId = username != Const.byAnon ? await getUserId(username) : null;
         // if (username) {
         //     console.log("1");
         //     userId = await inner(username);
@@ -61,6 +49,7 @@ export default async function handler(req, res) {
             const noteId = r.rows[0].id_note;
             console.log("id of newly created note is:", noteId);
             res.status(200).json({ id_note: noteId });
+            res.id_note = noteId;
         });
   } catch (err) {
       console.log("Error occured:", err);

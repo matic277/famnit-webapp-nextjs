@@ -9,30 +9,23 @@ import {
   faTrash
 } from "@fortawesome/free-solid-svg-icons";
 
-const NoteWebElt = ({note, onRemove}) => {
+const NoteWebElt = ({note, onRemove, onEdit}) => {
     // Auth0 user state
     const { user, isLoading } = useUser();
 
-    //console.log("parent=", parent);
-
-    function onEditClicked(event) {
-        console.log("Note edit clicked");
-        // TODO bring notesList here somehow, track state just like in index page
-    }
-
-    function onShareWithClicked(event) {
-        console.log("Note share clicked");
-        // TODO bring notesList here somehow, track state just like in index page
-    }
+    // function onShareWithClicked(event) {
+    //     console.log("Note share clicked");
+    //     // TODO bring notesList here somehow, track state just like in index page
+    // }
 
     return (
         <>
         <div className={styles.note}>
             <div className={styles.titleCotainer}>
-                <div className={styles.noteTitle}>(id={note.id_note}){note.title}</div>
-                <div className={(user && user.email == note.username) ? styles.noteOptionsContainer : styles.noteOptionsContainerHidden}>
-                    <FontAwesomeIcon icon={faEdit}       className={styles.noteOption}       onClick={(e) => onEditClicked(e)}/>
-                    <FontAwesomeIcon icon={faPaperPlane} className={styles.noteOption}       onClick={(e) => onShareWithClicked(e)}/>
+                <div className={styles.noteTitle}>{note.title} (id={note.id_note})</div>
+                <div className={((user && user.email == note.username) || note.editable) ? styles.noteOptionsContainer : styles.noteOptionsContainerHidden}>
+                    <FontAwesomeIcon icon={faEdit}       className={styles.noteOption}       onClick={(e) => onEdit(note)}/>
+                    {/* <FontAwesomeIcon icon={faPaperPlane} className={styles.noteOption}       onClick={(e) => onShareWithClicked(e)}/> */}
                     <FontAwesomeIcon icon={faTrash}      className={styles.noteOptionDelete} onClick={(e) => onRemove(note.id_note)}/>
                 </div>
             </div>

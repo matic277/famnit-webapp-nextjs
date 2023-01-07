@@ -8,6 +8,7 @@ import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 import NoteWebElt from "../components/NoteWebElt";
 
 import NoteUtils from "../lib/NoteUtils";
+import * as Const from "../lib/constants";
 
 
 export default function Home() {
@@ -25,6 +26,8 @@ export default function Home() {
     //             setUserId(user.id_user);
     //         });
     // }
+
+    const [editingNote, setEditingNote] = useState(null);
 
     // State of selected layout
     // -> default layout at start is "1 x n"
@@ -66,11 +69,12 @@ export default function Home() {
         const content = document.getElementById("noteContent");
         // TODO refactor: make a proper "Note" class
         console.log("user: ", user ? user.email : "Anonymous");
-        const username = user && user.email? user.email : undefined;
+        const username = user && user.email? user.email : Const.byAnon;
         const note = {
             username: username,
             title: title.value,
             content: content.value,
+            editable: true, // if you are the owner, you can edit it. But not after reloading TODO fix this
         };
         
         //console.log("body=", JSON.stringify(note));
@@ -81,6 +85,7 @@ export default function Home() {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Access-Control-Expose-Headers': 'Location'
             },
             body: JSON.stringify(note),
         }).then(response => {
@@ -89,6 +94,7 @@ export default function Home() {
             // Add id property, which was returned by api create
             note.id_note = response.id_note;
             console.log("got id_note=", response.id_note);
+            console.log("bgot id_note=", response.headers.get('Location'));
             // Update state, adding new note
             notes.unshift(note);
             setNotes([...notes]);
@@ -109,11 +115,11 @@ export default function Home() {
         setIndex(1 + fetchIndex);
         console.log("Getting new notes with index", index);
         const notesPromise = fetchMoreNotes(index);
-        notesPromise.then(function(newNotes) {
+        notesPromise.then(newNotes => {
             newNotes.forEach(n  => {
-                const author = (n.id_note == undefined || n.id_note == null) ? "Anonymous" : "TODO"; // TODO alter select sql to also return author name
-                console.log("Received notedid=", n.id_note, "by", author);
-                n.author = author;
+                const username = !n.id_note || !n.username ? Const.byAnon : "TODO"; // TODO alter select sql to also return author name
+                console.log("Got:",n);
+                n.username = username;
                 notes.push(n);
             });
             setNotes([...notes]);
@@ -125,13 +131,28 @@ export default function Home() {
         console.log("layout is now:", size);
     }
 
-    function removeNote(id) {
-        setNotes(prevNotes => prevNotes.filter(n => n.id_note != id));
+    function editNote(note) {
+        // populate input fields with existing data
+        document.getElementById("editNoteTitle")  .value = note.title;
+        document.getElementById("editNoteContent").value = note.content;
+        // open popup by setting value with note we're editing
+        setEditingNote(note);
+    }
+
+    function saveEdit(event) {
+        // editingNote should be not-null at this point
+        editingNote.title   = document.getElementById("editNoteTitle")  .value
+        editingNote.content = document.getElementById("editNoteContent").value
+        
+        // close popup
+        setEditingNote(null);
+
+        // TODO call update to database
     }
 
     return (
         <>
-            <div className={styles.contentContainer}>
+            <div className={editingNote ? styles.contentContainerBlurred : styles.contentContainer}>
                 <div className={styles.topRow}>
                     <div className={styles.addNoteContainer}>
                         <p className={styles.addNoteText}>Add note</p>
@@ -171,12 +192,25 @@ export default function Home() {
                                 'throwerror'}>
 
                     {/* <NotesList notes={notes} parent={() => console.log("AYYY") }/> */}
-                    {
-                    notes.map((note) => (
-                        <NoteWebElt key={note.id_note} note={note} onRemove={() => NoteUtils.deleteNote(setNotes, note.id_note)}/>
-                    ))
-                    }
+                    { notes.map(note => <NoteWebElt key={note.id_note}
+                                                    note={note}
+                                                    onRemove={() => NoteUtils.deleteNote(setNotes, note.id_note)}
+                                                    onEdit={() => editNote(note)}/>) }
                 </div>
+                
+            </div>
+            
+            {/* Popup window for editing a note */}
+            <div className={editingNote ? styles.popupContainer : styles.popupContainerHidden}>
+                    <div className={styles.edittitlecontainer}>
+                        <div className={styles.edittitletext}>Title:</div>
+                        <input id="editNoteTitle" className={styles.edittitleinput} type="text"></input><br/>
+                    </div>
+                    <div className={styles.editcontentcontainer}>
+                        <div className={styles.editcontenttext}>Content:</div>
+                        <input id="editNoteContent" className={styles.editcopntentinput} type="text"></input><br/>
+                    </div>
+                    <button onClick={(e) => saveEdit(e)}>save</button>
             </div>
         </>
     )

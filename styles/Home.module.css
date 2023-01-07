@@ -1,3 +1,4 @@
+
 .topRow {
     margin-top: 1em;
     text-align: center;
@@ -200,3 +201,22 @@
 .notesContainerFlow {
     display: flex;
 }
+
+
+
+/* --------------- POPUP WINDOW --------------- */
+.contentContainerBlurred {
+      filter: blur(1rem);
+}
+.popupContainer {
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    
+}
+.popupContainerHidden {
+    display: none;
+}
+
