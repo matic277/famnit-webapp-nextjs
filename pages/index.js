@@ -5,7 +5,9 @@ import styles from '../styles/Home.module.css'
 import { useState, useEffect } from 'react';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 
-import NotesList from "../components/NotesList";
+import NoteWebElt from "../components/NoteWebElt";
+
+import NoteUtils from "../lib/NoteUtils";
 
 
 export default function Home() {
@@ -54,40 +56,42 @@ export default function Home() {
     //     notesList[i].timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
     // }
     //console.log(notesList);
+
+    function createUserAndGetId() {
+        console.log("test");
+    }
     
     function onAddNoteClick(event) {        
         const title   = document.getElementById("noteTitle");
         const content = document.getElementById("noteContent");
         // TODO refactor: make a proper "Note" class
         console.log("user: ", user ? user.email : "Anonymous");
-        const d = new Date();
-        const timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
+        const username = user && user.email? user.email : undefined;
         const note = {
-            id: 5,
-            id_user: 1,
+            username: username,
             title: title.value,
             content: content.value,
-            author: user ? user.email : "Anonymous",
-            timestamp: timestamp
         };
         
-        // Update state, adding new note
-        notes.unshift(note);
-        setNotes([...notes]);
+        //console.log("body=", JSON.stringify(note));
         
-        // TODO: perform content checking
-        // TODO: send to server ->  get back Id -> set Id (use callback)
-        //       immediately show note as if it's added. Then when we get a response
-        //       from the server, set the id of the note - this will improve perceived responsivness.
-        
-        console.log("body=", JSON.stringify(note));
-
+        // TODO
+        // fix this GET-POST request... when note is added to ui I need id_note from DB
         fetch('api/notes/create', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(note),
+        }).then(response => {
+            console.log("Server response=", response);
+
+            // Add id property, which was returned by api create
+            note.id_note = response.id_note;
+            console.log("got id_note=", response.id_note);
+            // Update state, adding new note
+            notes.unshift(note);
+            setNotes([...notes]);
         });
     }
 
@@ -121,6 +125,10 @@ export default function Home() {
         console.log("layout is now:", size);
     }
 
+    function removeNote(id) {
+        setNotes(prevNotes => prevNotes.filter(n => n.id_note != id));
+    }
+
     return (
         <>
             <div className={styles.contentContainer}>
@@ -148,7 +156,11 @@ export default function Home() {
                 </div>
 
                 <br/>
+                <br/>
                 <button onClick={(e) => loadMoreNotes(e)}>Load more</button>
+                <br/>
+                <br/>
+                <button onClick={(e) => createUserAndGetId(e)}>create</button>
 
                 {/* this does not work? -> layout does not change*/}
                 {/* <div className={'styles.notesContainer'+layout+'xn'}> */}
@@ -158,7 +170,12 @@ export default function Home() {
                                 layout == 4 ? styles.notesContainerFlow :
                                 'throwerror'}>
 
-                    <NotesList notes={notes}/>
+                    {/* <NotesList notes={notes} parent={() => console.log("AYYY") }/> */}
+                    {
+                    notes.map((note) => (
+                        <NoteWebElt key={note.id_note} note={note} onRemove={() => NoteUtils.deleteNote(setNotes, note.id_note)}/>
+                    ))
+                    }
                 </div>
             </div>
         </>

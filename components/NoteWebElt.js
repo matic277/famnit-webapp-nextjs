@@ -1,4 +1,5 @@
-import styles from '../styles/Note.module.css'
+import styles from '../styles/Note.module.css';
+
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,9 +9,11 @@ import {
   faTrash
 } from "@fortawesome/free-solid-svg-icons";
 
-const NoteWebElt = ({note}) => {
+const NoteWebElt = ({note, onRemove}) => {
     // Auth0 user state
     const { user, isLoading } = useUser();
+
+    //console.log("parent=", parent);
 
     function onEditClicked(event) {
         console.log("Note edit clicked");
@@ -22,20 +25,15 @@ const NoteWebElt = ({note}) => {
         // TODO bring notesList here somehow, track state just like in index page
     }
 
-    function onDeleteClicked(event) {
-        console.log("Note delete clicked");
-        // TODO bring notesList here somehow, track state just like in index page
-    }
-
     return (
         <>
         <div className={styles.note}>
             <div className={styles.titleCotainer}>
-                <div className={styles.noteTitle}>{note.title}</div>
+                <div className={styles.noteTitle}>(id={note.id_note}){note.title}</div>
                 <div className={(user && user.email == note.username) ? styles.noteOptionsContainer : styles.noteOptionsContainerHidden}>
                     <FontAwesomeIcon icon={faEdit}       className={styles.noteOption}       onClick={(e) => onEditClicked(e)}/>
                     <FontAwesomeIcon icon={faPaperPlane} className={styles.noteOption}       onClick={(e) => onShareWithClicked(e)}/>
-                    <FontAwesomeIcon icon={faTrash}      className={styles.noteOptionDelete} onClick={(e) => onDeleteClicked(e)}/>
+                    <FontAwesomeIcon icon={faTrash}      className={styles.noteOptionDelete} onClick={(e) => onRemove(note.id_note)}/>
                 </div>
             </div>
             <div className={styles.noteInfo}>

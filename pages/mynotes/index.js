@@ -6,8 +6,8 @@ import { useState, useEffect } from 'react';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 //import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
-import NotesList from "../../components/NotesList";
-
+import NoteWebElt from "../../components/NoteWebElt";
+import NoteUtils from "../../lib/NoteUtils";
 
 export default function Mynotes() {
 // export default withPageAuthRequired(function Profile({ user }) {
@@ -38,47 +38,16 @@ export default function Mynotes() {
         return (<div>No notes</div>);
     }
 
-    // useEffect(() => {
-    //     console.log("Loading for userId=", userId);
-    //     setNotesLoading(true);
-    //     fetch("/api/notes/user?id=" + userId)
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             console.log("Fetched notes=", data);
-    //             setNotes(data);
-    //             setNotesLoading(false);
-    //         });
-    // }, []);
-    // if (!notes) return (<div>No notes</div>);
-
-    // const fetchNotesForUser = async () => {
-    //     const res = await fetch(
-    //         //"https://jsonplaceholder.typicode.com/posts?_limit=3"
-    //         "http://localhost:3000/api/user/notes?user_email=" + user.email
-    //     );
-    //     const newNotes = await res.json();
-    //     return newNotes;
-    // }
-    // function loadNotes(event) {
-    //     const userEmail = user ? user.email : "AB";
-    //     console.log("Getting new notes for user", userEmail);
-    //     const notesPromise = fetchNotesForUser();
-    //     notesPromise.then(function(newNotes) {
-    //         newNotes.forEach(n  => {
-    //             const author = userEmail;
-    //             console.log("Received notedid=", n.id_note, "by", author);
-    //             n.author = author;
-    //             notes.push(n);
-    //         });
-    //         setNotes([...notes]);
-    //      });         
-    // }
-    //loadNotes(null);
     return (
         <>
             <div className={styles.contentContainer}>
                 <div className={styles.content}>
-                    <NotesList notes={notes}/>
+                    {/* <NotesList notes={notes}/> */}
+                    {
+                    notes.map((note) => (
+                        <NoteWebElt key={note.id_note} note={note} onRemove={() => NoteUtils.deleteNote(setNotes, note.id_note)}/>
+                    ))
+                    }
                 </div>
             </div>
         </>
