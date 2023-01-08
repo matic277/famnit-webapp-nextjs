@@ -133,14 +133,13 @@
     /* margin-left: 2em; */
 
     display: inline-block; /* allign to center */
-    padding-top: 0.5em;
+    padding-top: 2em;
     /* background-color: violet; */
     /* width: fit-content; */
 }
 .optionsButton {
-    display:inline-block;
-    margin: 1em;
-    padding: 0.35em;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
 }
 
 
@@ -217,8 +216,9 @@
     /* text-align: center; */
     display: flex;           /* establish flex container */
     flex-direction: column;  /* make main axis vertical */
-    justify-content: center; /* center items vertically, in this case */
-    align-items: center;     /* center items horizontally, in this case */
+    /*justify-content: center; */ /* center items vertically */
+    align-items: center;      /* center items horizontally */
+    
     /* height: 300px; */
 
     /* cursor: pointer; */
@@ -259,8 +259,8 @@
     column-gap: 1em;
 }
 .notesContainerFlow {
-    display: flex;
-    align-items: center;
+    display: left;
+    /* align-items: center; */
     /* display: inline-block; */
 }
 
@@ -268,7 +268,7 @@
 
 /* --------------- POPUP WINDOW --------------- */
 .contentContainerBlurred {
-      filter: blur(1rem);
+    filter: blur(0.75rem);
 }
 .popupContainer {
     position: fixed;
@@ -276,9 +276,32 @@
     top: 40%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+
+    padding: 2rem;
+    border: 1px solid #454545;
+    border-radius: 1rem;
+    background-color: black;
     
 }
 .popupContainerHidden {
     display: none;
+}
+.popupbuttonscontainer {
+    text-align: right;
+    /* background-color: red; */
+
+    margin-top: 0.75rem;
+}
+.popupbutton {
+    margin-left: 0.75rem;
+    /* background-color: rgb(114, 114, 114); */
+    /* border: 1px solid rgb(207, 8, 8); */
+    /* border-radius: 0.25rem; */
+}
+.popupbuttonred {
+    margin-left: 0.75rem;
+    background-color: rgb(95, 18, 18);
+    border: 1px solid rgb(207, 8, 8);
+    border-radius: 0.25rem;
 }
 

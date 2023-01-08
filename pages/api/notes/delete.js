@@ -7,9 +7,10 @@ export default function handler(req, res) {
         return
     }
     try {
-        const noteId = req.body;
-        console.log("Deleting a note by id=", noteId);
-        
+        const noteId = req.body.id_note;
+        console.log("Trying to delete a note by id=", noteId);
+        if (!noteId) throw new Error("Deleting a note but id_note is not set:", noteId);
+
         const query = 'DELETE FROM NOTE WHERE id_note=$1';
         const result = conn.query(query, [noteId]);
         result.then(r => { res.status(200); });

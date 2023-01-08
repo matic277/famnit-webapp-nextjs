@@ -63,43 +63,6 @@ export default function Home() {
     function createUserAndGetId() {
         console.log("test");
     }
-    
-    function onAddNoteClick(event) {        
-        const title   = document.getElementById("noteTitle");
-        const content = document.getElementById("noteContent");
-        // TODO refactor: make a proper "Note" class
-        console.log("user: ", user ? user.email : "Anonymous");
-        const username = user && user.email? user.email : Const.byAnon;
-        const note = {
-            username: username,
-            title: title.value,
-            content: content.value,
-            editable: true, // if you are the owner, you can edit it. But not after reloading TODO fix this
-        };
-        
-        //console.log("body=", JSON.stringify(note));
-        
-        // TODO
-        // fix this GET-POST request... when note is added to ui I need id_note from DB
-        fetch('api/notes/create', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Access-Control-Expose-Headers': 'Location'
-            },
-            body: JSON.stringify(note),
-        }).then(response => {
-            console.log("Server response=", response);
-
-            // Add id property, which was returned by api create
-            note.id_note = response.id_note;
-            console.log("got id_note=", response.id_note);
-            console.log("bgot id_note=", response.headers.get('Location'));
-            // Update state, adding new note
-            notes.unshift(note);
-            setNotes([...notes]);
-        });
-    }
 
     const fetchMoreNotes = async (index) => {
         const res = await fetch(
@@ -117,7 +80,7 @@ export default function Home() {
         const notesPromise = fetchMoreNotes(index);
         notesPromise.then(newNotes => {
             newNotes.forEach(n  => {
-                const username = !n.id_note || !n.username ? Const.byAnon : "TODO"; // TODO alter select sql to also return author name
+                const username = !n.id_note || !n.username ? Const.byAnon : "TODO";
                 console.log("Got:",n);
                 n.username = username;
                 notes.push(n);
@@ -131,41 +94,76 @@ export default function Home() {
         console.log("layout is now:", size);
     }
 
+    function createNote(event) {
+        const username = user && user.email? user.email : Const.byAnon;
+        // Dummy note, that will be "edited"
+        const note = {
+            username: username,
+            title: "",
+            content: "",
+            editable: true, // if you are the owner, you can edit it. But not after reloading TODO fix this
+            type: Const.creating, // signal we are in "creation mode"
+        };
+        
+        // open popup by setting value with note we're creating (editing)
+        setEditingNote(note);
+    }
+
     function editNote(note) {
         // populate input fields with existing data
         document.getElementById("editNoteTitle")  .value = note.title;
         document.getElementById("editNoteContent").value = note.content;
+
+        // editing mode
+        note.type = Const.editing;
+
         // open popup by setting value with note we're editing
         setEditingNote(note);
     }
 
     function saveEdit(event) {
+        // update note with new values
         // editingNote should be not-null at this point
         editingNote.title   = document.getElementById("editNoteTitle")  .value
         editingNote.content = document.getElementById("editNoteContent").value
+
+        // TODO add field length checking
+        // title & content
         
+        if (editingNote.type == Const.editing) {
+            NoteUtils.updateNote(editingNote);
+        }
+        else if (editingNote.type == Const.creating) {
+            // TODO
+            // fix this GET-POST request... when note is added to ui I need id_note from DB
+            fetch('api/notes/create', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Access-Control-Expose-Headers': 'Location'
+                },
+                body: JSON.stringify(editingNote)
+            }).then(response => {
+                console.log("Server response=", response);
+
+                // Add id property, which was returned by api create
+                editingNote.id_note = response.id_note;
+                console.log("got id_note=", response.id_note);
+                console.log("bgot id_note=", response.headers.get('Location'));
+                // Update state, adding new note
+                notes.unshift(editingNote);
+                setNotes([...notes]);
+            });
+        }1
+
         // close popup
         setEditingNote(null);
-
-        // TODO call update to database
     }
 
     return (
         <>
             <div className={editingNote ? styles.contentContainerBlurred : styles.contentContainer}>
                 <div className={styles.topRow}>
-                    <div className={styles.addNoteContainer}>
-                        <p className={styles.addNoteText}>Add note</p>
-                        <div className={styles.popupNoteContainer}>
-                            <label className={styles.addNoteInputLabel}>Name</label><br/>
-                            <input id="noteTitle" className={styles.addNoteName} type="text"></input><br/>
-
-                            <label className={styles.addNoteInputLabel}>Content</label><br/>
-                            <textarea id="noteContent" className={styles.addNoteContent}></textarea><br/>
-                            <button className={styles.addNoteBtn} onClick={(e) => onAddNoteClick(e)}>Add</button>
-                        </div>
-                    </div>
-
                     <br/>
                     <div className={styles.layoutOptionsContainer}>
                         <div className={styles.selectLayoutText}>Layout:</div>
@@ -177,12 +175,10 @@ export default function Home() {
 
                     <br/>
                     <div className={styles.buttonsContainer}>
-                        <button className={styles.optionsButton} onClick={(e) => createUserAndGetId(e)}>Create</button>
+                        <button className={styles.optionsButton} onClick={(e) => createNote(e)}>Create note</button>
                         <button className={styles.optionsButton} onClick={(e) => loadMoreNotes(e)}>Load more</button>
                     </div>
                 </div>
-
-
                 
                 
                 {/* this does not work? -> layout does not change*/}
@@ -204,15 +200,19 @@ export default function Home() {
             
             {/* Popup window for editing a note */}
             <div className={editingNote ? styles.popupContainer : styles.popupContainerHidden}>
+                    <div>{editingNote ? "Edit note" : "Create note"}</div><br/>
                     <div className={styles.edittitlecontainer}>
                         <div className={styles.edittitletext}>Title:</div>
                         <input id="editNoteTitle" className={styles.edittitleinput} type="text"></input><br/>
                     </div>
                     <div className={styles.editcontentcontainer}>
                         <div className={styles.editcontenttext}>Content:</div>
-                        <input id="editNoteContent" className={styles.editcopntentinput} type="text"></input><br/>
+                        <textarea id="editNoteContent" className={styles.editcopntentinput} type="text"></textarea><br/>
                     </div>
-                    <button onClick={(e) => saveEdit(e)}>save</button>
+                    <div className={styles.popupbuttonscontainer}>
+                        <button className={styles.popupbuttonred} onClick={(e) => setEditingNote(null)}>cancel</button>
+                        <button className={styles.popupbutton}    onClick={(e) => saveEdit(e)}>save</button>
+                    </div>
             </div>
         </>
     )
