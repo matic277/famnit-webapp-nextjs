@@ -94,7 +94,7 @@ export default function Home() {
         console.log("layout is now:", size);
     }
 
-    function createNote(event) {
+    function startNoteCreation(event) {
         const username = user && user.email? user.email : Const.byAnon;
         // Dummy note, that will be "edited"
         const note = {
@@ -121,12 +121,21 @@ export default function Home() {
         setEditingNote(note);
     }
 
+    // Creating or editing a note
     function saveEdit(event) {
         // update note with new values
         // editingNote should be not-null at this point
         editingNote.title   = document.getElementById("editNoteTitle")  .value
         editingNote.content = document.getElementById("editNoteContent").value
 
+        // parse users
+        const userParser = text => {
+            if (!text) return [];
+            return text.split(';').filter(x => x.length > 1).map(user => user.trim());
+        }
+        const sharedUsers = userParser(document.getElementById("shareWith").value);
+        console.log("sharing with users:", sharedUsers);
+        
         // TODO add field length checking
         // title & content
         
@@ -175,7 +184,7 @@ export default function Home() {
 
                     <br/>
                     <div className={styles.buttonsContainer}>
-                        <button className={styles.optionsButton} onClick={(e) => createNote(e)}>Create note</button>
+                        <button className={styles.optionsButton} onClick={(e) => startNoteCreation(e)}>Create note</button>
                         <button className={styles.optionsButton} onClick={(e) => loadMoreNotes(e)}>Load more</button>
                     </div>
                 </div>
@@ -208,6 +217,11 @@ export default function Home() {
                     <div className={styles.editcontentcontainer}>
                         <div className={styles.editcontenttext}>Content:</div>
                         <textarea id="editNoteContent" className={styles.editcopntentinput} type="text"></textarea><br/>
+                    </div>
+                    <br/>
+                    <div className={styles.editsharedusers}>
+                        <div className={styles.editshareduserstext}>Share with:</div>
+                        <input id="shareWith" className={styles.edittitleinput} type="text"></input><br/>
                     </div>
                     <div className={styles.popupbuttonscontainer}>
                         <button className={styles.popupbuttonred} onClick={(e) => setEditingNote(null)}>cancel</button>

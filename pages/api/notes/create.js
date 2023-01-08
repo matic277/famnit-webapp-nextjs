@@ -1,19 +1,7 @@
-import { use } from 'react';
 import conn from '../../../lib/db'
 
 import * as Const from '../../../lib/constants';
-
-async function getUserId(username)
-{
-    try {
-        const query = 'SELECT id_user FROM public.user WHERE name=$1';
-        const result = await conn.query(query, [username]);
-        const response = result.rows[0].id_user;
-        return response;
-    } catch (err) {
-        console.log("Error occured getting id of user " + username + ":", err);
-    }
-}
+import UserUtils  from '../../../lib/user/UserUtils';
 
 // TODO this should be POST, but i need to return data (id of created note)
 export default async function handler(req, res) {
@@ -28,7 +16,7 @@ export default async function handler(req, res) {
         
         // get user_id first if needed
         const username = req.body.username;
-        let userId = username != Const.byAnon ? await getUserId(username) : null;
+        let userId = username != Const.byAnon ? await UserUtils.getUserId(username) : null;
         console.log("username", username, "resoved to id", userId);
 
         const noteId = req.body.id_note;

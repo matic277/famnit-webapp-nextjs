@@ -12,7 +12,8 @@ export default function handler(req, res) {
         console.log("Query value: ", queryIndex, " -> ", startIndex, " ", endIndex);
         const query = 'SELECT u.name as username, n.* ' +
                       'FROM public.note as n LEFT JOIN public.user as u on n.id_user=u.id_user ' +
-                      'WHERE n.id_note BETWEEN $1 AND $2';
+                      'WHERE n.id_note BETWEEN $1 AND $2 ' +
+                      'AND n.public=true';
         // const values = [req.body.content];
         const result = conn.query(query, [startIndex, endIndex]);
       result.then(r => { 

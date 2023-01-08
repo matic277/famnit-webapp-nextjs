@@ -4,52 +4,84 @@ import styles from '../../styles/Home.module.css'
 
 import { useState, useEffect } from 'react';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
-//import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 import NoteWebElt from "../../components/NoteWebElt";
 import NoteUtils from "../../lib/note/NoteUtils";
 
-export default function Mynotes() {
-// export default withPageAuthRequired(function Profile({ user }) {
-    
+export default function Mynotes() {   
     // Auth0 user state
     const { user, isLoading } = useUser();
     if (!user) {
-        return (<div>No user logged in</div>);
+        return (<div>Not logged in</div>);
     }
     
     // Grab users notes
-    const [notes, setNotes] = useState(null);
+    const [userNotes, setUserNotes] = useState(null);
+    // Grab shared notes
+    const [sharedNotes, setSharedNotes] = useState(null);
+
     useEffect(() => {
-        console.log("Loading for user=", user.email);
-        // setNotesLoading(true);
+        // User notes
+        console.log("Loading user notes for user=", user.email);
         fetch("/api/notes/user?name=" + user.email)
             .then((res) => res.json())
             .then((data) => {
-                console.log("Fetched notes=", data);
+                console.log("Fetched user notes=", data);
                 data.forEach(n => {
                     n.username = n.username == undefined ? "Anonymouse" : n.username;
                 });
-                setNotes(data);
-                // setNotesLoading(false);
+                setUserNotes(data);
+            });
+        
+        // Shared notes
+        console.log("Loading shared notes for user=", user.email);
+        fetch("/api/notes/shared?name=" + user.email)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("Fetched shared notes=", data);
+                setSharedNotes(data);
             });
     }, []);
-    if (!notes) {
+
+    // Shared notes
+    // useEffect(() => {
+    //     console.log("Loading shared notes for user=", user.email);
+    //     // setNotesLoading(true);
+    //     fetch("/api/notes/shared?name=" + user.email)
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             console.log("Fetched shared notes=", data);
+    //             setSharedNotes(data);
+    //             // setNotesLoading(false);
+    //         });
+    // }, []);
+
+    if (!userNotes || !sharedNotes) {
         return (<div>No notes</div>);
     }
 
     return (
         <>
             <div className={styles.contentContainer}>
-                <div className={styles.content}>
-                    {/* <NotesList notes={notes}/> */}
-                    {
-                    notes.map((note) => (
-                        <NoteWebElt key={note.id_note}
-                                    note={note}
-                                    onRemove={() => NoteUtils.deleteNote(setNotes, note.id_note)}/>
-                    ))
-                    }
+
+                <div className={styles.userNotesContainer}>
+                    <div>User notes:</div> <br/>
+                    { userNotes ?
+                        userNotes.map(note => <NoteWebElt key={note.id_note}
+                                                          note={note}
+                                                          onRemove={() => NoteUtils.deleteNote(setUserNotes, note.id_note)}/>) :
+                        <div>No notes have been shared with you</div> }
+                </div>
+
+                <br/>
+
+                <div className={styles.sharedNotesContainer}>
+                    <div>Shared with you:</div> <br/>
+                        { sharedNotes ?
+                            sharedNotes.map(note => <NoteWebElt key={note.id_note}
+                                                                note={note}
+                                                                onRemove={() => NoteUtils.deleteNote(setSharedNotes, note.id_note)}/>) :
+                            <div>No notes have been shared with you</div> }
                 </div>
             </div>
         </>
