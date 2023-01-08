@@ -45,7 +45,9 @@ export default function Mynotes() {
                     {/* <NotesList notes={notes}/> */}
                     {
                     notes.map((note) => (
-                        <NoteWebElt key={note.id_note} note={note} onRemove={() => NoteUtils.deleteNote(setNotes, note.id_note)}/>
+                        <NoteWebElt key={note.id_note}
+                                    note={note}
+                                    onRemove={() => NoteUtils.deleteNote(setNotes, note.id_note)}/>
                     ))
                     }
                 </div>
