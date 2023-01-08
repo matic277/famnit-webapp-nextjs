@@ -125,10 +125,11 @@ export default function Home() {
     function saveEdit(event) {
         // update note with new values
         // editingNote should be not-null at this point
-        editingNote.title   = document.getElementById("editNoteTitle")  .value
-        editingNote.content = document.getElementById("editNoteContent").value
-
-
+        editingNote.title   = document.getElementById("editNoteTitle")  .value;
+        editingNote.content = document.getElementById("editNoteContent").value;
+        editingNote.content = document.getElementById("editNoteContent").value;
+        editingNote.public  = document.getElementById("shareWith").checked;
+        
         // parse users
         const userParser = text => {
             if (!text) return [];
@@ -165,7 +166,7 @@ export default function Home() {
                 notes.unshift(editingNote);
                 setNotes([...notes]);
             });
-        }1
+        }
 
         // close popup
         setEditingNote(null);
@@ -224,6 +225,7 @@ export default function Home() {
                     <div className={styles.editsharedusers}>
                         <div className={styles.editshareduserstext}>Share with:</div>
                         <input id="shareWith" className={styles.edittitleinput} type="text"></input><br/>
+                        <input type="checkbox" id="shareWith" name="shareWith"/> <label> make public</label>
                     </div>
                     <div className={styles.popupbuttonscontainer}>
                         <button className={styles.popupbuttonred} onClick={(e) => setEditingNote(null)}>cancel</button>

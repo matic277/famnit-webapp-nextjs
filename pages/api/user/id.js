@@ -10,7 +10,6 @@ export default function handler(req, res) {
         const result = conn.query(query, [username]);
 
         result.then(r => {
-            console.log("Got data:", r.rows);
             if (r.rows.length > 1) {
                 console.error("More than one user by that name:", r.rows);
             }
