@@ -27,9 +27,6 @@ export default function Mynotes() {
             .then((res) => res.json())
             .then((data) => {
                 console.log("Fetched user notes=", data);
-                data.forEach(n => {
-                    n.username = n.username == undefined ? "Anonymouse" : n.username;
-                });
                 setUserNotes(data);
             });
         
@@ -42,24 +39,7 @@ export default function Mynotes() {
                 setSharedNotes(data);
             });
     }, []);
-
-    // Shared notes
-    // useEffect(() => {
-    //     console.log("Loading shared notes for user=", user.email);
-    //     // setNotesLoading(true);
-    //     fetch("/api/notes/shared?name=" + user.email)
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             console.log("Fetched shared notes=", data);
-    //             setSharedNotes(data);
-    //             // setNotesLoading(false);
-    //         });
-    // }, []);
-
-    if (!userNotes || !sharedNotes) {
-        return (<div>No notes</div>);
-    }
-
+    
     return (
         <>
             <div className={styles.contentContainer}>

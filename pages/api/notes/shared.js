@@ -10,7 +10,9 @@ export default async function handler(req, res) {
         let userId = await UserUtils.getUserId(username);
         console.log("username", username, "resoved to id", userId);
         
-        const query = 'SELECT n.* FROM public.note as n WHERE n.id_note in ' +
+        const query = 'SELECT u.name as username, n.* ' +
+                      'FROM public.note as n JOIN public.user as u ON u.id_user=n.id_user ' +
+                      'WHERE n.id_note in ' +
                       '    (SELECT id_note FROM public.shared WHERE id_user=$1)';
         const result = conn.query(query, [userId]);
       result.then(r => {

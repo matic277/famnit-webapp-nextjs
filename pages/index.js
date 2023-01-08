@@ -128,6 +128,7 @@ export default function Home() {
         editingNote.title   = document.getElementById("editNoteTitle")  .value
         editingNote.content = document.getElementById("editNoteContent").value
 
+
         // parse users
         const userParser = text => {
             if (!text) return [];
@@ -135,6 +136,7 @@ export default function Home() {
         }
         const sharedUsers = userParser(document.getElementById("shareWith").value);
         console.log("sharing with users:", sharedUsers);
+        editingNote.share = sharedUsers;
         
         // TODO add field length checking
         // title & content

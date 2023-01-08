@@ -1,6 +1,7 @@
 
 .topRow {
     margin-top: 1em;
+    margin-bottom: 1em;
     text-align: center;
 
     /* background-color: #482ff7; */
@@ -203,10 +204,6 @@
     border-radius: 0.5em;
     cursor: default;
 }
-/* .layoutOptionSelected:hover {
-    width: fit-content;
-    background-color: blue;
-} */
 
 /* ----- layouts impl -----*/
 .notesContainer1xn {
