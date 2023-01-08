@@ -7,7 +7,7 @@ import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 
 import NoteWebElt from "../components/NoteWebElt";
 
-import NoteUtils from "../lib/NoteUtils";
+import NoteUtils from "../lib/note/NoteUtils";
 import * as Const from "../lib/constants";
 
 
@@ -174,15 +174,17 @@ export default function Home() {
                         <div className={layout == 3 ? styles.layoutOptionSelected : styles.layoutOption} onClick={(e) => onSetLayoutClick(3)}>3 x n</div>
                         <div className={layout == 4 ? styles.layoutOptionSelected : styles.layoutOption} onClick={(e) => onSetLayoutClick(4)}>flow</div>
                     </div>
+
+                    <br/>
+                    <div className={styles.buttonsContainer}>
+                        <button className={styles.optionsButton} onClick={(e) => createUserAndGetId(e)}>Create</button>
+                        <button className={styles.optionsButton} onClick={(e) => loadMoreNotes(e)}>Load more</button>
+                    </div>
                 </div>
 
-                <br/>
-                <br/>
-                <button onClick={(e) => loadMoreNotes(e)}>Load more</button>
-                <br/>
-                <br/>
-                <button onClick={(e) => createUserAndGetId(e)}>create</button>
 
+                
+                
                 {/* this does not work? -> layout does not change*/}
                 {/* <div className={'styles.notesContainer'+layout+'xn'}> */}
                 <div className={layout == 1 ? styles.notesContainer1xn :
@@ -190,7 +192,7 @@ export default function Home() {
                                 layout == 3 ? styles.notesContainer3xn :
                                 layout == 4 ? styles.notesContainerFlow :
                                 'throwerror'}>
-
+                
                     {/* <NotesList notes={notes} parent={() => console.log("AYYY") }/> */}
                     { notes.map(note => <NoteWebElt key={note.id_note}
                                                     note={note}

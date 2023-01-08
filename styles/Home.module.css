@@ -3,13 +3,13 @@
     margin-top: 1em;
     text-align: center;
 
-    /*background-color: #482ff7;*/
+    /* background-color: #482ff7; */
 }
 
 .addNoteContainer {
     display: inline-block;
     /*background-color: #482ff7;*/
-
+    
     width:  6em;
     height: 3em;
 
@@ -127,30 +127,56 @@
     }
 }
 
+/* --------------- BUTTONS CONTAINER --------------- */
+.buttonsContainer {
+    /* margin-top: 1em; */
+    /* margin-left: 2em; */
 
+    display: inline-block; /* allign to center */
+    padding-top: 0.5em;
+    /* background-color: violet; */
+    /* width: fit-content; */
+}
+.optionsButton {
+    display:inline-block;
+    margin: 1em;
+    padding: 0.35em;
+}
 
 
 /* --------------- LAYOUT OPTIONS --------------- */
 .layoutOptionsContainer {
-    /* background-color: red; */
-    width: 100%;
+    /* background-color: blue; */
 
-    border-bottom: 1px solid #bbbbbb;;
+    width: fit-content;
+    /* margin-left: 2em; */
+
+    border: 1px solid #bbbbbb;
+    border-radius: 1em;
+
+    display: inline-block; /* allign to center */
+    /* border-bottom: 1px solid #bbbbbb;; */
 }
 
 .selectLayoutText {
+    /* float: left; */
     display: inline-block;
+    
     padding: 0.5em;
     margin: 0.5em;
+    
     width: fit-content;
 
     /* background-color: blueviolet; */
 }
 
 .layoutOption {
+    /* float: left; */
     display: inline-block;
+    
     padding: 0.5em;
     margin: 0.5em;
+    
     width: fit-content;
 
     border-radius: 0.5em;
@@ -165,14 +191,18 @@
     border-radius: 0.5em;
 }
 .layoutOptionSelected {
-    cursor: default;
+    /* float: left; */
     display: inline-block;
+    
     padding: 0.5em;
     margin: 0.5em;
+    
     width: fit-content;
+    
     background-color: #454545;
-
+    
     border-radius: 0.5em;
+    cursor: default;
 }
 /* .layoutOptionSelected:hover {
     width: fit-content;
@@ -181,25 +211,57 @@
 
 /* ----- layouts impl -----*/
 .notesContainer1xn {
-    cursor: pointer;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    grid-auto-rows: minmax(100px, auto);
+    /* width: 100%; */
+    /* background-color: aqua; */
+
+    /* text-align: center; */
+    display: flex;           /* establish flex container */
+    flex-direction: column;  /* make main axis vertical */
+    justify-content: center; /* center items vertically, in this case */
+    align-items: center;     /* center items horizontally, in this case */
+    /* height: 300px; */
+
+    /* cursor: pointer; */
+
+    /* display: inline-block; */
+    /* display: block; */
+
+/* margin: auto; */
+
+    /* grid-template-columns: repeat(1, 1fr);
+    grid-auto-rows: minmax(100px, auto); */
 }
 .notesContainer2xn {
     cursor: pointer;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: minmax(auto, auto);
+    margin: 20px auto;
 }
 .notesContainer3xn {
-    cursor: pointer;
+    /* cursor: pointer;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: minmax(auto, auto);
+
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column: span 1 / -1;
+    grid-auto-rows: min-content; */
+
+    /* grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(auto, auto); */
+
+    /* background-color: #aaa; */
+    margin: 0 auto;
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
+    -moz-column-gap: 1em;
+    -webkit-column-gap: 1em;
+    column-gap: 1em;
 }
 .notesContainerFlow {
     display: flex;
+    align-items: center;
+    /* display: inline-block; */
 }
 
 

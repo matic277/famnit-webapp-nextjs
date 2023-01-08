@@ -7,7 +7,7 @@ import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 //import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 import NoteWebElt from "../../components/NoteWebElt";
-import NoteUtils from "../../lib/NoteUtils";
+import NoteUtils from "../../lib/note/NoteUtils";
 
 export default function Mynotes() {
 // export default withPageAuthRequired(function Profile({ user }) {
