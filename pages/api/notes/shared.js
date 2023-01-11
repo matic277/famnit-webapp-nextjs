@@ -16,7 +16,6 @@ export default async function handler(req, res) {
                       '    (SELECT id_note FROM public.shared WHERE id_user=$1)';
         const result = conn.query(query, [userId]);
       result.then(r => {
-        console.log( "Got data: ", r.rows);
         res.status(200).json(r.rows);
       });
   } catch (err) {

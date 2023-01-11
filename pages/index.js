@@ -14,6 +14,7 @@ import * as Const from "../lib/constants";
 export default function Home() {
     // Auth0 user state
     const { user, isLoading } = useUser();
+    const [ userSaved, setUserSaved ] = useState(false);
 
     // TODO: getting userId from db is not needed?
     //       just use email, should be unique anyways...?
@@ -49,6 +50,49 @@ export default function Home() {
     }, []);
     if (notesLoading) return (<div>Loading...</div>);
     if (!notes) return (<div>No notes</div>);
+    if (user && !userSaved) {
+        setUserSaved(true);
+
+        let emailEncoded = user.email.replace('@', '%40');
+
+        // First get access token from auth0
+
+
+
+        // Now get info about user
+        // fetch('https://famnit-webapp-nextjs.eu.auth0.com/api/v2/users?q=email%3A%22' + emailEncoded + '%22&search_engine=v3', {
+        //     method: 'GET',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ name: user.email })
+        // }).then(response => {
+        //     console.log("Server response=", response);
+
+        //     // Add id property, which was returned by api create
+        //     editingNote.id_note = response.id_note;
+        //     console.log("got id_note=", response.id_note);
+        //     console.log("bgot id_note=", response.headers.get('Location'));
+        //     // Update state, adding new note
+        //     notes.unshift(editingNote);
+        //     setNotes([...notes]);
+        // });
+
+        // // Register user to DB
+        // fetch('api/user/create', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify({ name: user.email })
+        // }).then(response => {
+        //     console.log("Server response=", response);
+
+        //     // Add id property, which was returned by api create
+        //     editingNote.id_note = response.id_note;
+        //     console.log("got id_note=", response.id_note);
+        //     console.log("bgot id_note=", response.headers.get('Location'));
+        //     // Update state, adding new note
+        //     notes.unshift(editingNote);
+        //     setNotes([...notes]);
+        // });
+    }
 
     // Standard react stuff to change state on client and server
     //const [notes, setNotes] = useState(notesList);
@@ -143,29 +187,31 @@ export default function Home() {
         // title & content
         
         if (editingNote.type == Const.editing) {
+            console.log("EDITING");
             NoteUtils.updateNote(editingNote);
         }
         else if (editingNote.type == Const.creating) {
+            console.log("CREATING");
             // TODO
             // fix this GET-POST request... when note is added to ui I need id_note from DB
             fetch('api/notes/create', {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Access-Control-Expose-Headers': 'Location'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(editingNote)
-            }).then(response => {
-                console.log("Server response=", response);
-
+            })
+            .then(response => response.json())
+            .then(response => {
+                const newNoteId = response.id_note;
+                console.log("new note id=", newNoteId);
+                
                 // Add id property, which was returned by api create
-                editingNote.id_note = response.id_note;
-                console.log("got id_note=", response.id_note);
-                console.log("bgot id_note=", response.headers.get('Location'));
+                editingNote.id_note = newNoteId;
                 // Update state, adding new note
                 notes.unshift(editingNote);
                 setNotes([...notes]);
             });
+        } else {
+            console.log("UNKNOWN");
         }
 
         // close popup

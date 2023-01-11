@@ -10,20 +10,16 @@ async function insertToSharedTable(noteId, userIds) {
     const statement = "INSERT INTO public.shared(id_user, id_note) VALUES " + inserts + ";";
     try {
         const result = await conn.query(statement);
-        return true;
     }
     catch(err) {
         console.error("Error saving to shared, statement=", statement);
-        return false;
     }
 }
 
-// TODO this should be POST, but i need to return data (id of created note)
 export default async function handler(req, res) {
     console.log("--------------------API request invoked (create)------------------------");
     if (req.method !== 'POST') {
-        res.status(405).send({ message: 'Request method ' + req.method + ' used, but only POST requests are allowed!' })
-        return
+        return res.status(405).send({ message: 'Request method ' + req.method + ' used, but only POST requests are allowed!' });
     }
     try {
         console.log("Saving new note...");
@@ -52,24 +48,26 @@ export default async function handler(req, res) {
         console.log("Shared with(resolved):", sharedIds);
 
         if (type == Const.creating) {
+            console.log("creating");
             const query = 'INSERT INTO NOTE(ID_USER, TITLE, CONTENT, PUBLIC, TIMESTAMP) VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP) RETURNING id_note';
-            conn.query(query, [userId, title, content, public_])
+            conn
+                .query(query, [userId, title, content, public_])
                 .then(r => {
                     const noteId = r.rows[0].id_note;
                     console.log("id of newly created note is:", noteId);
                     res.id_note = noteId;
                     return noteId;
                 })
-                .then(id => insertToSharedTable(id, sharedIds))
-                .then(ok => ok ? res.status(200).json({ id_note: noteId }) :
-                                 res.status(500));
+                .then(id => { insertToSharedTable(id, sharedIds); return id; })
+                .then(id => res.status(201).json({ id_note: id }) );
         }
         else if (type == Const.editing) {
             if (!noteId) throw new Error("Editing note but id of note is not set:", noteId);
             const query = 'UPDATE public.note set TITLE=$1, CONTENT=$2, PUBLIC=$3, TIMESTAMP=CURRENT_TIMESTAMP where id_note=$4';
-            conn.query(query, [userId, title, content, public_])
+            return conn
+                .query(query, [title, content, public_, noteId])
                 .then(r => { console.log("UPDATED noteId:", noteId);
-                             res.status(200).json({ id_note: noteId }); });
+                             res.status(201).json({ id_note: noteId }); });
         }
         else {
             throw new Error("Unrecognized type mode:", type);
