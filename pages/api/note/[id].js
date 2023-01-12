@@ -8,14 +8,14 @@ async function getNote(id, res) {
                   'WHERE n.id_note = $1 AND n.public=true';
     return conn.query(query, [id])
                .then(r => {
-                  if (r.rows.length != 1) {
-                    res.status(404);
-                    return undefined;
-                  }
-                  const note = r.rows[0];
-                  console.log("Resolved to", note);
-                  res.status(200).json(r.rows);
-                  return note;
+                    if (r.rows.length != 1) {
+                        res.status(404);
+                        return undefined;
+                    }
+                    const note = r.rows[0];
+                    console.log("Resolved to", note);
+                    res.status(200).json(r.rows);
+                    return note;
                });
 }
 
@@ -41,7 +41,7 @@ async function deleteNote(id, res) {
 async function postNote(note, res) {
     console.log("postNote=", note);
     if (note.id_note) updateNote(note, res);
-    else              createNote(note, res);
+    return res.status(404);
 }
 
 // TODO missing update for shared table
@@ -54,38 +54,7 @@ async function updateNote(note, res) {
     return res;
 }
 
-async function createNote(note, res) {
-    console.log("Creating note=", note);
-    
-    // get user_id first if needed
-    const username = req.body.username;
-    const userId = username != Const.byAnon ? await UserUtils.getUserId(username) : null;
-    console.log("username", username, "resoved to id", userId);
-    
-    // resolve shared users
-    const sharedWith = note.share;
-    // cache (TODO this should be done outside this function)
-    const userIdsByNames = {};
-    for (const shared of sharedWith) {
-        const cached = userIdsByNames[shared];
-        userIdsByNames[shared] = cached ? cached : await UserUtils.getUserId(shared);
-    }
-    const sharedIds = Object.entries(userIdsByNames).map(([_, v]) => v).filter(x => x); // filter to throw away non numbers
-    console.log("Shared with:", sharedWith);
-    console.log("Shared with(resolved):", sharedIds);
-
-    const query = "INSERT INTO public.note(ID_USER, TITLE, CONTENT, PUBLIC, TIMESTAMP) " +
-                  "VALUES ($1, $2, $3, $4, CURRENT_TIMESTAMP) RETURNING id_note";
-    await conn.query(query, [userId, note.title, note.content, note.public])
-              .then(r => {
-                  const noteId = r.rows[0].id_note;
-                  console.log("Created note id=", noteId);
-                  return noteId;
-              })
-              .then(id => { insertToSharedTable(id, sharedIds); return id; })
-              .then(id => res.status(201).json({ id_note: id }) );
-}
-
+// TODO code duplication from create.js
 async function insertToSharedTable(noteId, userIds) {
     if (userIds.length < 1) return;
     console.log("Inserting to shared for users=", userIds);
