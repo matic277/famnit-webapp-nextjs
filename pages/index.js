@@ -164,7 +164,7 @@ export default function Home() {
     }
 
     // Creating or editing a note
-    function saveEdit(event) {
+    async function saveEdit(event) {
         // update note with new values
         // editingNote should be not-null at this point
         editingNote.title   = document.getElementById("editNoteTitle")  .value;
@@ -185,35 +185,33 @@ export default function Home() {
         // title & content
         
         if (editingNote.type == Const.editing) {
-            console.log("EDITING");
-            NoteUtils.updateNote(editingNote);
+            console.log("EDITING ", editingNote);
+            NoteUtils.update(editingNote);
         }
         else if (editingNote.type == Const.creating) {
             console.log("CREATING");
-            // TODO
-            // fix this GET-POST request... when note is added to ui I need id_note from DB
-            fetch('api/notes/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(editingNote)
-            })
-            .then(response => response.json())
-            .then(response => {
-                const newNoteId = response.id_note;
-                console.log("new note id=", newNoteId);
-                
-                // Add id property, which was returned by api create
-                editingNote.id_note = newNoteId;
-                // Update state, adding new note
-                notes.unshift(editingNote);
-                setNotes([...notes]);
-            });
+            await NoteUtils.create(editingNote);
+            
+            // Update state, adding new note
+            notes.unshift(editingNote);
+            setNotes([...notes]);
         } else {
             console.log("UNKNOWN");
         }
 
         // close popup
         setEditingNote(null);
+    }
+
+    function testBtnClick() {
+        fetch('api/note/160', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        })
+        .then(r => r.json())
+        .then(r => {
+            console.log("response=", r);
+        });
     }
 
     return (
@@ -233,6 +231,7 @@ export default function Home() {
                     <div className={styles.buttonsContainer}>
                         <button className={styles.optionsButton} onClick={(e) => startNoteCreation(e)}>Create note</button>
                         <button className={styles.optionsButton} onClick={(e) => loadMoreNotes(e)}>Load more</button>
+                        <button className={styles.optionsButton} onClick={(e) => testBtnClick(e)}>Test</button>
                     </div>
                 </div>
                 
@@ -248,7 +247,7 @@ export default function Home() {
                     {/* <NotesList notes={notes} parent={() => console.log("AYYY") }/> */}
                     { notes.map(note => <NoteWebElt key={note.id_note}
                                                     note={note}
-                                                    onRemove={() => NoteUtils.deleteNote(setNotes, note.id_note)}
+                                                    onRemove={() => NoteUtils.delete(setNotes, note.id_note)}
                                                     onEdit={() => editNote(note)}/>) }
                 </div>
                 
