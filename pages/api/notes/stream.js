@@ -15,13 +15,15 @@ export default function handler(req, res) {
                       'WHERE n.id_note BETWEEN $1 AND $2 ' +
                       'AND n.public=true';
         // const values = [req.body.content];
-        const result = conn.query(query, [startIndex, endIndex]);
-      result.then(r => { 
-        // console.log( "Got data: ", r.rows);
-        res.status(200).json(r.rows);
-      });
+      return conn.query(query, [startIndex, endIndex])
+                 .then(r => {
+                      // console.log( "Got data: ", r.rows);
+                      res.status(200).json(r.rows);
+                 });
   } catch (err) {
-      console.log("Error occured:", err);
+    res.status(500).end();
+    console.log("Error occured:", err);
+    return res;
   }
     // res.status(200).json({ name: 'John Doe' })
 }
