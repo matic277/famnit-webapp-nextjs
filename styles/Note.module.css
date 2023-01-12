@@ -4,8 +4,9 @@
     display: inline-block;
     box-sizing: border-box;
     
+    width: fit-content;
     min-width: 20em;
-    width: 20em;
+    max-width: 30em;
 
     min-height: 5em;
     max-height: fit-content;
@@ -16,6 +17,8 @@
     background-color: black;
 
     border-radius: 0.5em;
+
+    white-space: pre-wrap;
 }
 .note:hover {
     color: white;

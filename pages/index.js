@@ -124,10 +124,8 @@ export default function Home() {
         const notesPromise = fetchMoreNotes(index);
         notesPromise.then(newNotes => {
             newNotes.forEach(n  => {
-                const username = !n.id_note || !n.username ? Const.byAnon : "TODO";
-                console.log("Got:",n);
-                n.username = username;
-                notes.push(n);
+                n.username = n.username ? n.username : Const.byAnon;
+                notes.unshift(n);
             });
             setNotes([...notes]);
          });         
@@ -261,17 +259,17 @@ export default function Home() {
                     <div>{editingNote ? "Edit note" : "Create note"}</div><br/>
                     <div className={styles.edittitlecontainer}>
                         <div className={styles.edittitletext}>Title:</div>
-                        <input id="editNoteTitle" className={styles.edittitleinput} type="text"></input><br/>
+                        <input id="editNoteTitle" className={styles.editTitleInput} type="text"></input><br/>
                     </div>
                     <div className={styles.editcontentcontainer}>
                         <div className={styles.editcontenttext}>Content:</div>
-                        <textarea id="editNoteContent" className={styles.editcopntentinput} type="text"></textarea><br/>
+                        <textarea id="editNoteContent" className={styles.editContentInput} type="text"></textarea><br/>
                     </div>
                     <br/>
                     <div className={styles.editsharedusers}>
                         <div className={styles.editshareduserstext}>Share with:</div>
-                        <input id="shareWith" className={styles.edittitleinput} type="text"></input><br/>
-                        <input type="checkbox" id="shareWith" name="shareWith"/> <label> make public</label>
+                        <input id="shareWith" className={styles.editShareWithInput} type="text"></input><br/><br/>
+                        <input type="checkbox" id="shareWith" name="shareWith" className={styles.editInput}/> <label> make public</label>
                     </div>
                     <div className={styles.popupbuttonscontainer}>
                         <button className={styles.popupbuttonred} onClick={(e) => setEditingNote(null)}>cancel</button>

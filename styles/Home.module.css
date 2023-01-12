@@ -1,131 +1,9 @@
-
 .topRow {
     margin-top: 1em;
     margin-bottom: 1em;
     text-align: center;
 
     /* background-color: #482ff7; */
-}
-
-.addNoteContainer {
-    display: inline-block;
-    /*background-color: #482ff7;*/
-    
-    width:  6em;
-    height: 3em;
-
-    background-color: black;
-    border: 1px solid #bbbbbb;
-    border-radius: 1em;
-
-    transition: all 0.3s ease-in-out;
-}
-.addNoteText {
-    /*background-color: red;*/
-    font-weight: 500;
-
-}
-
-.addNoteName {
-    /*transition-property: transform;*/
-    /*animation-duration: 0.5s;*/
-    /*animation-timing-function: ease-in-out;*/
-    /*animation-iteration-count: infinite;*/
-}
-
-/*animating everything as a whole*/
-.addNoteContainer:hover .popupNoteContainer{
-    display: inline-block;
-    /*transition: all 0.1s ease-in-out;*/
-    animation-name: scaling;
-    animation-iteration-count: 1;
-}
-.addNoteContainer:hover {
-    transition: all 0.3s ease-in-out;
-    height: 20em;
-    width: 20em;
-}
-/*animating each component individually*/
-/*.addNoteContainer:hover .addNoteBtn {*/
-/*    transition: all 2s ease-in-out;*/
-/*    animation-name: scaling;*/
-/*    animation-iteration-count: 1;*/
-/*}*/
-/*.addNoteContainer:hover .addNoteContent {*/
-/*    transition: all 2s ease-in-out;*/
-/*    animation-name: scaling;*/
-/*    animation-iteration-count: 1;*/
-/*}*/
-/*.addNoteContainer:hover .addNoteName {*/
-/*    transition: all 2s ease-in-out;*/
-/*    animation-name: scaling;*/
-/*    animation-iteration-count: 1;*/
-/*}*/
-
-.popupNoteContainer {
-    /*transition: all 0.5s ease-in-out;*/
-    display: none;
-
-    /*background-color: #482ff7;*/
-    height: 80%;
-
-    transition-property: transform;
-    animation-duration: 0.3s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-}
-
-.addNoteInputLabel {
-    color: #bebebe;
-    font-size: 0.8em;
-
-    /*transition-property: transform;*/
-    /*animation-duration: 1s;*/
-    /*animation-timing-function: ease-in-out;*/
-    /*animation-iteration-count: infinite;*/
-}
-
-.addNoteContent {
-    height: 55%;
-    width: 100%;
-
-    /*transition-property: transform;*/
-    /*animation-duration: 1s;*/
-    /*animation-timing-function: ease-in-out;*/
-    /*animation-iteration-count: infinite;*/
-}
-
-
-.addNoteBtn {
-    margin-top: 0.75em;
-    height: 2.5em;
-    width: 5em;
-
-    /*transition-property: transform;*/
-    /*animation-duration: 1s;*/
-    /*animation-timing-function: ease-in-out;*/
-    /*animation-iteration-count: infinite;*/
-
-    /*animation: fadeIn 5s;*/
-    /*-webkit-animation: fadeIn 5s;*/
-}
-
-@keyframes scaling {
-    0% {
-        transform:
-                scale(0)
-        ;
-    }
-    50% {
-        transform:
-                scale(0.2)
-        ;
-    }
-    100% {
-        transform:
-                scale(1)
-        ;
-    }
 }
 
 /* --------------- BUTTONS CONTAINER --------------- */
@@ -143,6 +21,10 @@
     margin-right: 0.75rem;
 }
 
+
+.contentContainer {
+    padding-bottom: 1em;
+}
 
 /* --------------- LAYOUT OPTIONS --------------- */
 .layoutOptionsContainer {
@@ -266,6 +148,7 @@
 /* --------------- POPUP WINDOW --------------- */
 .contentContainerBlurred {
     filter: blur(0.75rem);
+    padding-bottom: 1em;
 }
 .popupContainer {
     position: fixed;
@@ -278,7 +161,6 @@
     border: 1px solid #454545;
     border-radius: 1rem;
     background-color: black;
-    
 }
 .popupContainerHidden {
     display: none;
@@ -301,4 +183,13 @@
     border: 1px solid rgb(207, 8, 8);
     border-radius: 0.25rem;
 }
-
+.editTitleInput {
+    width:  17em;
+}
+.editContentInput {
+    height: 17em;
+    width:  17em;
+}
+.editShareWithInput {
+    width:  17em;
+}
