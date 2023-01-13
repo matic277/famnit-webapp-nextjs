@@ -217,31 +217,11 @@ export default function Home() {
                 
             </div>
             
-            {/* Popup window for editing a note */}
-            {/* <div className={editingNote ? styles.popupContainer : styles.popupContainerHidden}> */}
-                    {/* <div>{editingNote ? "Edit note" : "Create note"}</div><br/> */}
-                    {/* <div className={styles.edittitlecontainer}> */}
-                        {/* <div className={styles.edittitletext}>Title:</div> */}
-                        {/* <input id="editNoteTitle" className={styles.editTitleInput} type="text"></input><br/> */}
-                    {/* </div> */}
-                    {/* <div className={styles.editcontentcontainer}> */}
-                        {/* <div className={styles.editcontenttext}>Content:</div> */}
-                        {/* <textarea id="editNoteContent" className={styles.editContentInput} type="text"></textarea><br/> */}
-                    {/* </div> */}
-                    {/* <br/> */}
-                    {/* <div className={styles.editsharedusers}> */}
-                        {/* <div className={styles.editshareduserstext}>Share with:</div> */}
-                        {/* <input id="shareWith" className={styles.editShareWithInput} type="text"></input><br/><br/> */}
-                        {/* <input type="checkbox" id="shareWith" name="shareWith" className={styles.editInput}/> <label> make public</label> */}
-                    {/* </div> */}
-                    {/* <div className={styles.popupbuttonscontainer}> */}
-                        {/* <button className={styles.popupbuttonred} onClick={(e) => setEditingNote(null)}>cancel</button> */}
-                        {/* <button className={styles.popupbutton}    onClick={(e) => saveEdit(e)}>save</button> */}
-                    {/* </div> */}
-            {/* </div> */}
-
             <div className={editingNote ? styles.popupContainer : styles.popupContainerHidden}>
-                <EditNotePopup key={-1} editingNote={editingNote} setEditingNote={() => setEditingNote()} saveEdit={() => saveEdit()}/>
+                <EditNotePopup key={-1}
+                               editingNote={editingNote}
+                               setEditingNote={() => setEditingNote()}
+                               saveEdit={() => saveEdit()}/>
             </div>
         </>
     )

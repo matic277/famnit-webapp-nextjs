@@ -1,6 +1,4 @@
-import styles from "../styles/Layout.module.css";
-import styles2 from '../styles/Home.module.css'
-
+import styles from '../styles/Home.module.css'
 
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 

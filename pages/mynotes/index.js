@@ -63,13 +63,6 @@ export default function Mynotes() {
                 <div className={styles.userPageNotesContainer}>
                     <div className={styles.containerTitle}>Your notes</div> <br/>
 
-                    <div className={editingNote ? styles.popupContainer : styles.popupContainerHidden}>
-                        <EditNotePopup key={-1}
-                                       editingNote={editingNote}
-                                       setEditingNote={() => setEditingNote()}
-                                       saveEdit={() => saveEdit()}/>
-                    </div> <br/>
-
                     { userNotes ?
                         userNotes.map(note => <NoteWebElt key={note.id_note}
                                                           note={note}
@@ -90,6 +83,13 @@ export default function Mynotes() {
                             <div className={styles.noNotesText}>
                                 No notes have been shared with you</div> }
                 </div>
+            </div>
+
+            <div className={editingNote ? styles.popupContainer : styles.popupContainerHidden}>
+                <EditNotePopup key={-1}
+                               editingNote={editingNote}
+                               setEditingNote={() => setEditingNote()}
+                               saveEdit={() => saveEdit()}/>
             </div>
         </>
     );

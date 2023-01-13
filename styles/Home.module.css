@@ -177,8 +177,8 @@
     position: fixed;
     left: 50%;
     top: 40%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -40%);
+    transform: translate(-50%, -40%);
 
     padding: 2rem;
     border: 1px solid #454545;
@@ -190,7 +190,6 @@
 }
 .popupbuttonscontainer {
     text-align: right;
-    /* background-color: red; */
 
     margin-top: 0.75rem;
 }
