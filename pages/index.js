@@ -6,8 +6,9 @@ import { useState, useEffect } from 'react';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 
 import NoteWebElt from "../components/NoteWebElt";
+import EditNotePopup from "../components/EditNotePopup";
 
-import NoteUtils from "../lib/note/NoteUtils";
+import NoteUtils from "../lib/client/NoteUtils";
 import * as Const from "../lib/constants";
 
 
@@ -152,67 +153,30 @@ export default function Home() {
     }
 
     function editNote(note) {
-        // populate input fields with existing data
-        document.getElementById("editNoteTitle")  .value = note.title;
-        document.getElementById("editNoteContent").value = note.content;
-
-        // editing mode
-        note.type = Const.editing;
-
-        // open popup by setting value with note we're editing
-        setEditingNote(note);
+        NoteUtils.editNote(
+            note,
+            setEditingNote,
+            document.getElementById("editNoteTitle"),
+            document.getElementById("editNoteContent"));
     }
 
     // Creating or editing a note
     async function saveEdit(event) {
         // update note with new values
         // editingNote should be not-null at this point
-        editingNote.title   = document.getElementById("editNoteTitle")  .value;
-        editingNote.content = document.getElementById("editNoteContent").value;
-        editingNote.content = document.getElementById("editNoteContent").value;
-        editingNote.public  = document.getElementById("shareWith").checked;
-        
-        // parse users
-        const userParser = text => {
-            if (!text) return [];
-            return text.split(';').filter(x => x.length > 1).map(user => user.trim());
-        }
-        const sharedUsers = userParser(document.getElementById("shareWith").value);
-        console.log("sharing with users:", sharedUsers);
-        editingNote.share = sharedUsers;
-        
-        // TODO add field length checking
-        // title & content
-        
-        if (editingNote.type == Const.editing) {
-            console.log("EDITING ", editingNote);
-            NoteUtils.update(editingNote);
-        }
-        else if (editingNote.type == Const.creating) {
-            console.log("CREATING");
-            await NoteUtils.create(editingNote);
-            
-            // Update state, adding new note
-            notes.unshift(editingNote);
-            setNotes([...notes]);
-        } else {
-            console.log("UNKNOWN");
-        }
-
-        // close popup
-        setEditingNote(null);
+        NoteUtils.saveEdit(editingNote, setEditingNote, setNotes, notes);
     }
 
-    function testBtnClick() {
-        fetch('api/note/160', {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-        })
-        .then(r => r.json())
-        .then(r => {
-            console.log("response=", r);
-        });
-    }
+    //function testBtnClick() {
+    //    fetch('api/note/160', {
+    //        method: 'DELETE',
+    //        headers: { 'Content-Type': 'application/json' },
+    //    })
+    //    .then(r => r.json())
+    //    .then(r => {
+    //        console.log("response=", r);
+    //    });
+    //}
 
     return (
         <>
@@ -231,7 +195,7 @@ export default function Home() {
                     <div className={styles.buttonsContainer}>
                         <button className={styles.optionsButton} onClick={(e) => startNoteCreation(e)}>Create note</button>
                         <button className={styles.optionsButton} onClick={(e) => loadMoreNotes(e)}>Load more</button>
-                        <button className={styles.optionsButton} onClick={(e) => testBtnClick(e)}>Test</button>
+                        {/* <button className={styles.optionsButton} onClick={(e) => testBtnClick(e)}>Test</button> */}
                     </div>
                 </div>
                 
@@ -254,26 +218,30 @@ export default function Home() {
             </div>
             
             {/* Popup window for editing a note */}
+            {/* <div className={editingNote ? styles.popupContainer : styles.popupContainerHidden}> */}
+                    {/* <div>{editingNote ? "Edit note" : "Create note"}</div><br/> */}
+                    {/* <div className={styles.edittitlecontainer}> */}
+                        {/* <div className={styles.edittitletext}>Title:</div> */}
+                        {/* <input id="editNoteTitle" className={styles.editTitleInput} type="text"></input><br/> */}
+                    {/* </div> */}
+                    {/* <div className={styles.editcontentcontainer}> */}
+                        {/* <div className={styles.editcontenttext}>Content:</div> */}
+                        {/* <textarea id="editNoteContent" className={styles.editContentInput} type="text"></textarea><br/> */}
+                    {/* </div> */}
+                    {/* <br/> */}
+                    {/* <div className={styles.editsharedusers}> */}
+                        {/* <div className={styles.editshareduserstext}>Share with:</div> */}
+                        {/* <input id="shareWith" className={styles.editShareWithInput} type="text"></input><br/><br/> */}
+                        {/* <input type="checkbox" id="shareWith" name="shareWith" className={styles.editInput}/> <label> make public</label> */}
+                    {/* </div> */}
+                    {/* <div className={styles.popupbuttonscontainer}> */}
+                        {/* <button className={styles.popupbuttonred} onClick={(e) => setEditingNote(null)}>cancel</button> */}
+                        {/* <button className={styles.popupbutton}    onClick={(e) => saveEdit(e)}>save</button> */}
+                    {/* </div> */}
+            {/* </div> */}
+
             <div className={editingNote ? styles.popupContainer : styles.popupContainerHidden}>
-                    <div>{editingNote ? "Edit note" : "Create note"}</div><br/>
-                    <div className={styles.edittitlecontainer}>
-                        <div className={styles.edittitletext}>Title:</div>
-                        <input id="editNoteTitle" className={styles.editTitleInput} type="text"></input><br/>
-                    </div>
-                    <div className={styles.editcontentcontainer}>
-                        <div className={styles.editcontenttext}>Content:</div>
-                        <textarea id="editNoteContent" className={styles.editContentInput} type="text"></textarea><br/>
-                    </div>
-                    <br/>
-                    <div className={styles.editsharedusers}>
-                        <div className={styles.editshareduserstext}>Share with:</div>
-                        <input id="shareWith" className={styles.editShareWithInput} type="text"></input><br/><br/>
-                        <input type="checkbox" id="shareWith" name="shareWith" className={styles.editInput}/> <label> make public</label>
-                    </div>
-                    <div className={styles.popupbuttonscontainer}>
-                        <button className={styles.popupbuttonred} onClick={(e) => setEditingNote(null)}>cancel</button>
-                        <button className={styles.popupbutton}    onClick={(e) => saveEdit(e)}>save</button>
-                    </div>
+                <EditNotePopup key={-1} editingNote={editingNote} setEditingNote={() => setEditingNote()} saveEdit={() => saveEdit()}/>
             </div>
         </>
     )

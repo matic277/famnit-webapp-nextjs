@@ -5,6 +5,29 @@
 
     /* background-color: #482ff7; */
 }
+.userPageNotesContainer {
+    
+}
+.containerTitle {
+    margin-top: 2em;
+    /* margin-bottom: 1em; */
+    text-align: center;
+
+    font-size: larger;
+    font-weight: 700;
+
+    /* background-color: #482ff7; */
+}
+.noNotesText {
+    /* margin-top: 1em; */
+
+    text-align: center;
+
+    font-style: italic;
+    color: gray;
+
+    /* background-color: #482ff7; */
+}
 
 /* --------------- BUTTONS CONTAINER --------------- */
 .buttonsContainer {

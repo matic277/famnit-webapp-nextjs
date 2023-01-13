@@ -1,6 +1,5 @@
 import conn from '../../../lib/db'
 
-const fetchSize = 3;
 
 export default function handler(req, res) {
   console.log("--------------------API request invoked (user)------------------------")

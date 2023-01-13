@@ -6,7 +6,9 @@ import { useState, useEffect } from 'react';
 import { UserProvider, useUser } from '@auth0/nextjs-auth0/client';
 
 import NoteWebElt from "../../components/NoteWebElt";
-import NoteUtils from "../../lib/note/NoteUtils";
+import EditNotePopup from "../../components/EditNotePopup";
+
+import NoteUtils from "../../lib/client/NoteUtils";
 
 export default function Mynotes() {   
     // Auth0 user state
@@ -19,6 +21,8 @@ export default function Mynotes() {
     const [userNotes, setUserNotes] = useState(null);
     // Grab shared notes
     const [sharedNotes, setSharedNotes] = useState(null);
+
+    const [editingNote, setEditingNote] = useState(null);
 
     useEffect(() => {
         // User notes
@@ -36,32 +40,55 @@ export default function Mynotes() {
             .then((res) => res.json())
             .then((data) => {
                 console.log("Fetched shared notes=", data);
-                setSharedNotes(data);
+                if (data.length > 0) setSharedNotes(data);
             });
     }, []);
+
+    function saveEdit() {
+        NoteUtils.saveEdit(editingNote, setEditingNote, setUserNotes, userNotes);
+    }
+
+    function editNote(note) {
+        NoteUtils.editNote(
+            note,
+            setEditingNote,
+            document.getElementById("editNoteTitle"),
+            document.getElementById("editNoteContent"));
+    }
     
     return (
         <>
-            <div className={styles.contentContainer}>
+            <div className={editingNote ? styles.contentContainerBlurred : styles.contentContainer}>
 
-                <div className={styles.userNotesContainer}>
-                    <div>User notes:</div> <br/>
+                <div className={styles.userPageNotesContainer}>
+                    <div className={styles.containerTitle}>Your notes</div> <br/>
+
+                    <div className={editingNote ? styles.popupContainer : styles.popupContainerHidden}>
+                        <EditNotePopup key={-1}
+                                       editingNote={editingNote}
+                                       setEditingNote={() => setEditingNote()}
+                                       saveEdit={() => saveEdit()}/>
+                    </div> <br/>
+
                     { userNotes ?
                         userNotes.map(note => <NoteWebElt key={note.id_note}
                                                           note={note}
-                                                          onRemove={() => NoteUtils.deleteNote(setUserNotes, note.id_note)}/>) :
-                        <div>No notes have been shared with you</div> }
+                                                          onRemove={() => NoteUtils.delete(setUserNotes, note.id_note)}
+                                                          onEdit={() => editNote(note)}/>) :
+                        <div className={styles.noNotesText}>
+                            You have no notes</div> }
                 </div>
 
                 <br/>
 
-                <div className={styles.sharedNotesContainer}>
-                    <div>Shared with you:</div> <br/>
+                <div className={styles.userPageNotesContainer}>
+                    <div className={styles.containerTitle}>Shared with you</div> <br/>
                         { sharedNotes ?
                             sharedNotes.map(note => <NoteWebElt key={note.id_note}
                                                                 note={note}
-                                                                onRemove={() => NoteUtils.deleteNote(setSharedNotes, note.id_note)}/>) :
-                            <div>No notes have been shared with you</div> }
+                                                                onRemove={() => NoteUtils.delete(setSharedNotes, note.id_note)}/>) :
+                            <div className={styles.noNotesText}>
+                                No notes have been shared with you</div> }
                 </div>
             </div>
         </>

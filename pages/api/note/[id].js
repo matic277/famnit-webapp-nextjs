@@ -40,7 +40,7 @@ async function deleteNote(id, res) {
 
 async function postNote(note, res) {
     console.log("postNote=", note);
-    if (note.id_note) updateNote(note, res);
+    if (note.id_note) return updateNote(note, res);
     return res.status(404);
 }
 
