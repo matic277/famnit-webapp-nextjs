@@ -44,6 +44,10 @@ export default function Mynotes() {
             });
     }, []);
 
+    function startNoteCreation(event) {
+        NoteUtils.startNoteCreation(user, setEditingNote);
+    }
+
     function saveEdit() {
         NoteUtils.saveEdit(editingNote, setEditingNote, setUserNotes, userNotes);
     }
@@ -61,7 +65,13 @@ export default function Mynotes() {
             <div className={editingNote ? styles.contentContainerBlurred : styles.contentContainer}>
 
                 <div className={styles.userPageNotesContainer}>
-                    <div className={styles.containerTitle}>Your notes</div> <br/>
+                    <div className={styles.containerTitle}>Your notes</div>
+                    <br/>
+
+                    <div className={styles.buttonsContainerMyNotesPage}>
+                        <button className={styles.optionsButton} onClick={(e) => startNoteCreation(e)}>Create note</button>
+                    </div>
+                    <br/>
 
                     { userNotes ?
                         userNotes.map(note => <NoteWebElt key={note.id_note}
@@ -75,13 +85,15 @@ export default function Mynotes() {
                 <br/>
 
                 <div className={styles.userPageNotesContainer}>
-                    <div className={styles.containerTitle}>Shared with you</div> <br/>
-                        { sharedNotes ?
-                            sharedNotes.map(note => <NoteWebElt key={note.id_note}
-                                                                note={note}
-                                                                onRemove={() => NoteUtils.delete(setSharedNotes, note.id_note)}/>) :
-                            <div className={styles.noNotesText}>
-                                No notes have been shared with you</div> }
+                    <div className={styles.containerTitle}>Shared with you</div>
+                    <br/>
+
+                    { sharedNotes ?
+                        sharedNotes.map(note => <NoteWebElt key={note.id_note}
+                                                            note={note}
+                                                            onRemove={() => NoteUtils.delete(setSharedNotes, note.id_note)}/>) :
+                        <div className={styles.noNotesText}>
+                            No notes have been shared with you</div> }
                 </div>
             </div>
 

@@ -36,8 +36,20 @@
 
     display: inline-block; /* allign to center */
     padding-top: 2em;
+
+    width: 100%;
+
+    /* background-color: #bbbbbb; */
+
+    text-align: center;
+
     /* background-color: violet; */
     /* width: fit-content; */
+}
+.buttonsContainerMyNotesPage {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
 }
 .optionsButton {
     margin-left: 0.75rem;

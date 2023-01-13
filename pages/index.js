@@ -138,18 +138,7 @@ export default function Home() {
     }
 
     function startNoteCreation(event) {
-        const username = user && user.email? user.email : Const.byAnon;
-        // Dummy note, that will be "edited"
-        const note = {
-            username: username,
-            title: "",
-            content: "",
-            editable: true, // if you are the owner, you can edit it. But not after reloading TODO fix this
-            type: Const.creating, // signal we are in "creation mode"
-        };
-        
-        // open popup by setting value with note we're creating (editing)
-        setEditingNote(note);
+        NoteUtils.startNoteCreation(user, setEditingNote);
     }
 
     function editNote(note) {
