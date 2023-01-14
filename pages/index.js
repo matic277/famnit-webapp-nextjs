@@ -42,7 +42,7 @@ export default function Home() {
     const [notesLoading, setNotesLoading] = useState(false);
     useEffect(() => {
         setNotesLoading(true);
-        fetch("/api/notes/stream?index=0")
+        fetch("/api/note/stream?index=0")
             .then((res) => res.json())
             .then((data) => {
                 setNotes(data);
@@ -113,7 +113,7 @@ export default function Home() {
         const res = await fetch(
             //"https://jsonplaceholder.typicode.com/posts?_limit=3"
             //(process.env.environment == 'production' ? "https://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
-            "/api/notes/stream?index=" + index
+            "/api/note/stream?index=" + index
         );
         const newNotes = await res.json();
         return newNotes;
@@ -220,7 +220,7 @@ export default function Home() {
 //     const res = await fetch(
 //         //"https://jsonplaceholder.typicode.com/posts?_limit=3"
 //         (process.env.environment == 'production' ? "http://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
-//         "/api/notes/stream?index=0"
+//         "/api/note/stream?index=0"
 //     );
 //     try {
 //         const notesList = await res.json();
