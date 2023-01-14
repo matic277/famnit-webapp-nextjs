@@ -12,29 +12,26 @@
     max-height: fit-content;
 
     margin: 1em;
-    border: 1px solid #646464;
+    border: 1px solid #c9c9c9;
 
-    background-color: black;
+    background-color: rgb(252, 252, 252);
 
     border-radius: 0.5em;
 
     white-space: pre-wrap;
 }
 .note:hover {
-    color: white;
-    border: 1px solid #b6b6b6;
-}
-.note:hover .noteContent{
-    /* overflow: visible; */
-    /* background-color: #482ff7; */
-
-    filter: brightness(200%);
-
-    /* NOTE: for transitions to work properly (to resize to fit content), max-height must be used instead of height */
-    /* max-height: 100vh;  */
+    background-color: white;
+    border: 1px solid #949494;
 }
 .note:hover .noteInfo{
-    filter: brightness(200%);
+    color: rgb(51, 49, 172);
+}
+.note:hover .noteTitle {
+    color: rgb(0, 0, 0);
+}
+.note:hover .noteContent {
+    color: rgb(0, 0, 0);
 }
 
 .titleCotainer {
@@ -50,20 +47,13 @@
 
 }
 
-/* fontSize: 15, color: "blue"
-fontSize: 15, color: "blue"
-fontSize: 15, color: "blue" */
-
 .noteOptionsContainer {
     /* text and padding */
-    color: rgb(100, 0, 0);
     padding: 0.3em;
 
     /* top rounded corners */
     border-top-left-radius: 0.5em;
     border-top-right-radius: 0.5em;
-
-    /* background-color: black; */
 }
 
 .noteOptionsContainerHidden {
@@ -74,10 +64,10 @@ fontSize: 15, color: "blue" */
     cursor: pointer;
     padding-left: 0.85em;
     padding-right: 0.15em;
-    color: GRAY;
+    color: rgb(156, 156, 156);
 }
 .noteOption:hover {
-    color: WHITE;
+    color: BLACK;
     cursor: pointer;
  }
  .noteOptionDelete {
@@ -86,17 +76,16 @@ fontSize: 15, color: "blue" */
     padding-left: 0.85em;
     padding-right: 0.15em;
     /* padding-right: 0.2em; */
-    color: GRAY;
+    color: rgb(156, 156, 156);
 }
  .noteOptionDelete:hover {
     color: rgb(200, 0, 0);
     cursor: pointer;
  }
 .noteTitle {
-    /* float: left; */
-
     /* background-color: black; */
-    font-weight: 500;
+    font-weight: 600;
+    color: #555555;
     height: 30%;
 
     /* padding around text */
@@ -117,7 +106,7 @@ fontSize: 15, color: "blue" */
 
     font-size: small;
     font-weight: 500;
-    color: rgb(73, 75, 143);
+    color: rgb(152, 154, 219);
 
     /* padding around text */
     padding: 0.3em;
@@ -157,21 +146,4 @@ fontSize: 15, color: "blue" */
     padding: 0.3em;
     padding-left: 0.7em;
     padding-right: 0.7em;
-
-    /* hide overfill */
-    /* overflow: hidden; */
-    /* text-overflow: ellipsis; */
-
-    /* word-break: break-all; */
-    /* word-wrap: pre; */
-
-    /* transition:all .3s ease-in-out; */
-    /* NOTE: for transitions to work properly (to resize to fit content), max-height must be used instead of height */
-    /* max-height: 2.2em; */
 }
-/* .noteContent:hover {
-    background-color: aqua;
-}
-.noteContentContainer:hover {
-    background-color: rebeccapurple;
-} */

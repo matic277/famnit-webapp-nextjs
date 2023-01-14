@@ -54,8 +54,16 @@
 .optionsButton {
     margin-left: 0.75rem;
     margin-right: 0.75rem;
-}
 
+    padding: 0.5rem;
+
+    border: 1px solid #bbbbbb;
+    border-radius: 0.5em;
+}
+.optionsButton:hover {
+    background-color: rgb(235, 235, 235);
+    border: 1px solid #808080;
+}
 
 .contentContainer {
     padding-bottom: 1em;
@@ -97,14 +105,14 @@
     width: fit-content;
 
     border-radius: 0.5em;
-    border: 1px solid #101010; /* prevent hover border resize, backroundcolor*/
+    border: 1px solid #bbbbbb; /* prevent hover border resize, backroundcolor*/
 }
 .layoutOption:hover {
     cursor: pointer;
     width: fit-content;
     /* background-color: blue; */
 
-    border: 1px solid #454545;
+    border: 1px solid #9ab7f5;
     border-radius: 0.5em;
 }
 .layoutOptionSelected {
@@ -116,7 +124,7 @@
     
     width: fit-content;
     
-    background-color: #454545;
+    background-color: #9ab7f5;
     
     border-radius: 0.5em;
     cursor: default;
@@ -192,10 +200,12 @@
     -webkit-transform: translate(-50%, -40%);
     transform: translate(-50%, -40%);
 
+    font-weight: 500;
+
     padding: 2rem;
     border: 1px solid #454545;
     border-radius: 1rem;
-    background-color: black;
+    background-color: rgb(231, 231, 231);
 }
 .popupContainerHidden {
     display: none;
@@ -207,15 +217,32 @@
 }
 .popupbutton {
     margin-left: 0.75rem;
+
+    padding: 0.4rem;
+    border: 1px solid #9c9c9c;
+    border-radius: 0.4em;
     /* background-color: rgb(114, 114, 114); */
     /* border: 1px solid rgb(207, 8, 8); */
     /* border-radius: 0.25rem; */
 }
+.popupbutton:hover {
+    background-color: rgb(247, 247, 247);
+    border: 1px solid #727272;
+}
 .popupbuttonred {
     margin-left: 0.75rem;
-    background-color: rgb(95, 18, 18);
-    border: 1px solid rgb(207, 8, 8);
-    border-radius: 0.25rem;
+    background-color: rgb(252, 174, 174);
+    border: 1px solid rgb(207, 55, 55);
+    border-radius: 0.4rem;
+    padding: 0.375rem;
+}
+.popupbuttonred:hover {
+    background-color: rgb(253, 154, 154);
+    border: 1px solid rgb(219, 30, 30);
+}
+.editNoteText {
+    font-weight: 700;
+    font-size: large;
 }
 .editTitleInput {
     width:  17em;

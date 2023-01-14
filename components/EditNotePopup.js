@@ -9,7 +9,7 @@ const EditNotePopup = ({ editingNote, setEditingNote, saveEdit }) => {
     const { user, isLoading } = useUser();
 
     return ( <>
-            <div>{editingNote ? "Edit note" : "Create note"}</div><br/>
+            <div className={styles.editNoteText}>{editingNote ? "Edit note" : "Create note"}</div><br/>
             <div className={styles.edittitlecontainer}>
                 <div className={styles.edittitletext}>Title:</div>
                 <input id="editNoteTitle" className={styles.editTitleInput} type="text"></input><br/>
