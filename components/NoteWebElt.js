@@ -9,8 +9,6 @@ import {
   faTrash
 } from "@fortawesome/free-solid-svg-icons";
 
-import * as Const from '../lib/constants';
-
 const NoteWebElt = ({note, onRemove, onEdit}) => {
     // Auth0 user state
     const { user, isLoading } = useUser();
