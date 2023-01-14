@@ -16,7 +16,7 @@ export default function handler(req, res) {
                     'AND n.public=true';
       return conn.query(query, [startIndex, endIndex])
                  .then(r => {
-                      // console.log( "Got data: ", r.rows);
+                      console.log( "Got data: ", r.rows);
                       res.status(200).json(r.rows);
                  });
   } catch (err) {

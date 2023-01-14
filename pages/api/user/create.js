@@ -18,10 +18,12 @@ export default function handler(req, res) {
                 conn.query(insert, [username]).then(r => console.log("r->",r));
             });
         res.status(200);
-  } catch (err) {
-      console.log("Error occured:", err);
-      res.status(500);
-  }
+    } catch (err) {
+        console.log("Error occured:", err);
+        res.status(500);
+    }
+    res.end();
+    return res;
 }
 
   

@@ -28,16 +28,16 @@ export default function Home() {
     //             setUserId(user.id_user);
     //         });
     // }
-
+    
     const [editingNote, setEditingNote] = useState(null);
-
+    
     // State of selected layout
     // -> default layout at start is "1 x n"
     const [layout, setLayout] = useState(1);
-
+    
     // Track state of fetch index, increment on every button "Load more" press
     const [fetchIndex, setIndex] = useState(0);
-
+    
     const [notes, setNotes] = useState(null);
     const [notesLoading, setNotesLoading] = useState(false);
     useEffect(() => {
@@ -45,6 +45,7 @@ export default function Home() {
         fetch("/api/note/stream?index=0")
             .then((res) => res.json())
             .then((data) => {
+                data.map(n => n.username = n.username ? n.username : Const.byAnon);
                 setNotes(data);
                 setNotesLoading(false);
             });
@@ -57,8 +58,6 @@ export default function Home() {
         let emailEncoded = user.email.replace('@', '%40');
 
         // First get access token from auth0
-
-
 
         // Now get info about user
         // fetch('https://famnit-webapp-nextjs.eu.auth0.com/api/v2/users?q=email%3A%22' + emailEncoded + '%22&search_engine=v3', {
