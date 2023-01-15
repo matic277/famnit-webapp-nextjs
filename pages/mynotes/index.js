@@ -24,6 +24,8 @@ export default function Mynotes() {
 
     const [editingNote, setEditingNote] = useState(null);
 
+    console.log("USER=", user);
+
     useEffect(() => {
         // User notes
         console.log("Loading user notes for user=", user.email);

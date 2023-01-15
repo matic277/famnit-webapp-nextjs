@@ -53,67 +53,24 @@ export default function Home() {
     if (notesLoading) return (<div>Loading...</div>);
     if (!notes) return (<div>No notes</div>);
     if (user && !userSaved) {
-        setUserSaved(true);
-
-        let emailEncoded = user.email.replace('@', '%40');
-
-        // First get access token from auth0
-
-        // Now get info about user
-        // fetch('https://famnit-webapp-nextjs.eu.auth0.com/api/v2/users?q=email%3A%22' + emailEncoded + '%22&search_engine=v3', {
-        //     method: 'GET',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ name: user.email })
-        // }).then(response => {
-        //     console.log("Server response=", response);
-
-        //     // Add id property, which was returned by api create
-        //     editingNote.id_note = response.id_note;
-        //     console.log("got id_note=", response.id_note);
-        //     console.log("bgot id_note=", response.headers.get('Location'));
-        //     // Update state, adding new note
-        //     notes.unshift(editingNote);
-        //     setNotes([...notes]);
-        // });
-
-        // // Register user to DB
-        // fetch('api/user/create', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ name: user.email })
-        // }).then(response => {
-        //     console.log("Server response=", response);
-
-        //     // Add id property, which was returned by api create
-        //     editingNote.id_note = response.id_note;
-        //     console.log("got id_note=", response.id_note);
-        //     console.log("bgot id_note=", response.headers.get('Location'));
-        //     // Update state, adding new note
-        //     notes.unshift(editingNote);
-        //     setNotes([...notes]);
-        // });
-    }
-
-    // Standard react stuff to change state on client and server
-    //const [notes, setNotes] = useState(notesList);
-
-    // Append timestamp to dummy data
-    // for (let i=0; i < notesList.length; i++) {
-    //     let d = new Date();
-    //     notesList[i].timestamp = d.getDay() + "." + d.getMonth() + "." + d.getFullYear();
-    // }
-    //console.log(notesList);
-
-    function createUserAndGetId() {
-        console.log("test");
+        // Register user to DB
+        fetch('api/user/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: user.email, sub: user.sub })
+        })
+        .then(r => r.json())
+        .then(r => {
+            const userId = r.id_user;
+            console.log("user resolved to id=", userId);
+            setUserSaved(true);
+            // Append userId to user struct
+            user.id_user = userId;
+        });
     }
 
     const fetchMoreNotes = async (index) => {
-        const res = await fetch(
-            //"https://jsonplaceholder.typicode.com/posts?_limit=3"
-            //(process.env.environment == 'production' ? "https://famnit-webapp-nextjs.vercel.app" : "http://localhost:3000") +
-            "/api/note/stream?index=" + index
-        );
+        const res = await fetch("/api/note/stream?index=" + index);
         const newNotes = await res.json();
         return newNotes;
     }
@@ -155,17 +112,6 @@ export default function Home() {
         NoteUtils.saveEdit(editingNote, setEditingNote, setNotes, notes);
     }
 
-    //function testBtnClick() {
-    //    fetch('api/note/160', {
-    //        method: 'DELETE',
-    //        headers: { 'Content-Type': 'application/json' },
-    //    })
-    //    .then(r => r.json())
-    //    .then(r => {
-    //        console.log("response=", r);
-    //    });
-    //}
-
     return (
         <>
             <div className={editingNote ? styles.contentContainerBlurred : styles.contentContainer}>
@@ -183,7 +129,6 @@ export default function Home() {
                     <div className={styles.buttonsContainer}>
                         <button className={styles.optionsButton} onClick={(e) => startNoteCreation(e)}>Create note</button>
                         <button className={styles.optionsButton} onClick={(e) => loadMoreNotes(e)}>Load more</button>
-                        {/* <button className={styles.optionsButton} onClick={(e) => testBtnClick(e)}>Test</button> */}
                     </div>
                 </div>
                 

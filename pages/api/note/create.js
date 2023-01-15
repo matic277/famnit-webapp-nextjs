@@ -7,9 +7,10 @@ async function postNote(note, res) {
     console.log("Creating note=", note);
     
     // get user_id first if needed
-    const username = note.username;
-    const userId = username != Const.byAnon ? await UserUtils.getUserId(username) : null;
-    console.log("username", username, "resoved to id", userId);
+    //const username = note.username;
+    const userId = note.id_user ? note.id_user : null;
+    //console.log("username", username, "resoved to id", userId);
+    //const userId = note.id_user;
     
     // resolve shared users
     const sharedWith = note.share;
