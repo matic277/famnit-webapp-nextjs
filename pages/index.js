@@ -54,7 +54,7 @@ export default function Home() {
     if (!notes) return (<div>No notes</div>);
     if (user && !userSaved) {
         // Register user to DB
-        fetch('api/user/create', {
+        fetch('api/user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: user.email, sub: user.sub })

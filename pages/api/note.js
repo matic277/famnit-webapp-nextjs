@@ -1,6 +1,6 @@
-import * as Const from "../../../lib/constants";
-import conn from '../../../lib/db'
-import UserUtils from '../../../lib/user/UserUtils'
+import * as Const from "../../lib/constants";
+import conn from '../../lib/db'
+import UserUtils from '../../lib/user/UserUtils'
 
 
 async function postNote(note, res) {

@@ -1,4 +1,4 @@
-import conn from '../../../lib/db'
+import conn from '../../lib/db'
 
 async function createUser(name, sub) {
     const insert = 'INSERT INTO public.user (name, sub, timestamp) VALUES($1, $2, CURRENT_TIMESTAMP) RETURNING id_user';
